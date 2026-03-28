@@ -1,8 +1,8 @@
-# Research Repo: A Git-Native Protocol for Scientific Knowledge Production
+# Paper Repo: A Git-Native Protocol for Scientific Knowledge Production
 
-A research program is not a sequence of documents. It is a repository.
+A research program is not a sequence of documents. It is a repository. Papers are not the research — they are renders of the research at specific points on its timeline, shared with the scientific community so findings can be confirmed and knowledge can accumulate.
 
-**Research Repo** defines a protocol for managing scientific research as version-controlled repositories — where papers are tagged releases forked to journals for community review, with automated compliance gates, attributed reviewer commits, and provenance chains that make the full research lifecycle machine-readable.
+**Paper Repo** defines a protocol for managing scientific research as version-controlled repositories. The protocol optimizes the knowledge production process, not the paper. Individual papers are tagged releases — frozen snapshots forked to journals for community review — with automated compliance gates, attributed reviewer commits, and provenance chains that make the full research lifecycle machine-readable.
 
 ## Core Concept
 
