@@ -769,7 +769,15 @@ Review labor becomes visible, portable, and creditable. The reviewer's work is n
 
 The editor gains structured data about every paper in the pipeline: who contributed what, how the paper has been received elsewhere, and what the reviewer community thinks — not as a stack of PDFs in an inbox, but as a queryable graph of repositories, forks, and review branches.
 
-### 4.4 For the System
+### 4.4 For AI Transparency
+
+One of the most contested questions in contemporary science is the role of AI in research: which parts of a paper were written, analyzed, or suggested by AI tools? Current disclosure mechanisms are text statements ("AI was used for...") that no one can verify. A researcher can declare any level of AI involvement — or none — and the declaration is unfalsifiable.
+
+The repository protocol offers a structural approach to this problem. When AI tools interact with a paper repository, their contributions are commits — the same versioned, timestamped, attributed operations that track human contributions. The `CONTRIBUTORS.yaml` file records each AI tool with its type (`ai_tool`), its specific roles (writing-review, consistency-checking, formal-analysis), and a disclosure statement. The commit history shows exactly which sections were modified in commits attributed to AI-assisted sessions.
+
+This does not fully solve the AI transparency problem — an author can still commit AI-generated text under their own name. But it shifts the default from unverifiable declaration to auditable history. A repository where Claude is listed in CONTRIBUTORS.yaml with 0 commits but the manuscript was written in 3 days raises the same questions a code review would raise: the attribution and the evidence do not match. The git log creates a structural expectation of consistency between declared contributions and observed activity — an expectation that does not exist when the only disclosure is a sentence in the acknowledgments.
+
+### 4.5 For the System
 
 The cumulative effect is that scientific publishing becomes a transparent, auditable, machine-readable graph of knowledge production. The Matthew Effect — where early prestige compounds into career advantage through mechanisms invisible to evaluation systems — becomes measurable. The non-ergodic dynamics of academic careers (Zharnikov, 2026o) become traceable. The specification gap in peer review (Zharnikov, 2026t) becomes closeable.
 
