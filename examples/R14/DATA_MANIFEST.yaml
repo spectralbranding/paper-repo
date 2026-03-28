@@ -1,0 +1,21 @@
+# DATA_MANIFEST.yaml — R14: Paper as Repository
+# External data dependencies per the Paper-as-Repository protocol
+# This paper is conceptual — no external experimental data.
+
+data_manifest: []
+# This paper has no external data dependencies.
+# It is a conceptual protocol design paper.
+# The supporting artifacts (schemas, validator, examples) are
+# contained within the repository, not in external archives.
+#
+# If the paper included empirical data (e.g., a pilot study of
+# the compliance gate), the manifest would look like:
+#
+# - id: "pilot-study-data"
+#   description: "Compliance gate pilot: 50 manuscripts validated"
+#   archive: "Zenodo"
+#   doi: "10.5281/zenodo.XXXXXXX"
+#   size_gb: 0.01
+#   format: "CSV"
+#   checksum_sha256: "..."
+#   access: public

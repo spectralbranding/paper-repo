@@ -1,0 +1,229 @@
+# journal_spec.yaml — Machine-readable journal submission requirements
+# Part of the Paper-as-Repository protocol (Zharnikov, 2026u)
+#
+# A journal publishes this file. An author's toolchain validates against it
+# before fork/submission. Non-compliant papers fail the gate locally —
+# no wasted editorial labor, no desk rejections for formatting.
+#
+# Schema version: 0.1.0
+# Spec: https://github.com/spectralbranding/paper-repo (forthcoming)
+
+schema_version: "0.1.0"
+
+# ── Journal Identity ──────────────────────────────────────────
+journal:
+  name: "Example Journal of Science"
+  issn: "1234-5678"
+  publisher: "Example Publisher"
+  submission_system: "ScholarOne"           # ScholarOne | Editorial Manager | Research Exchange | OJS | Submittable | Cambridge
+  portal_url: "https://mc.manuscriptcentral.com/example"
+  spec_updated: "2026-03-28"
+
+# ── Manuscript Requirements ───────────────────────────────────
+manuscript:
+  types_accepted:
+    - research_article
+    - review_article
+    - conceptual_paper
+    - registered_report
+    - methods_paper
+
+  format:
+    source: [markdown, latex, quarto]       # author's SSOT format
+    submission: [docx, pdf]                 # rendered output for portal upload
+    font: "Times New Roman"
+    font_size: 12
+    line_spacing: double
+    margins_inches: 1.0
+    page_numbers: true                      # true | false | prohibited
+
+  word_count:
+    min: 5000
+    max: 12000
+    includes: [body, footnotes]
+    excludes: [abstract, references, appendices, tables, figure_captions]
+
+  sections_required:
+    - abstract
+    - keywords
+    - introduction
+    - conclusion
+    - references
+
+  sections_optional:
+    - literature_review
+    - methodology
+    - results
+    - discussion
+    - appendix
+    - supplementary_material
+
+  heading_format:
+    numbered: false                         # true (JOD/Springer) | false (JM/AMA)
+    introduction_labeled: true              # false for JM ("do NOT label Introduction")
+    levels: 3
+
+# ── Abstract ──────────────────────────────────────────────────
+abstract:
+  max_words: 200
+  structure: unstructured                   # unstructured | structured_imrad
+  person: third                             # third | any
+  references_allowed: false
+  standalone: true                          # must be comprehensible without reading paper
+
+# ── Keywords ──────────────────────────────────────────────────
+keywords:
+  min: 4
+  max: 6
+  source: free_form                         # free_form | dropdown (provide list URL)
+  jel_codes_required: false
+
+# ── References ────────────────────────────────────────────────
+references:
+  style: apa7                               # apa7 | ama | chicago_author_date | springer_author_date | aom | endnotes
+  min_count: 20
+  max_count: null
+  doi_required: true
+  self_citation_max_percent: 25
+  author_name_format: initials              # initials | full_first_names
+  et_al_threshold: 3
+  dataset_citation_required: false
+
+# ── Figures ───────────────────────────────────────────────────
+figures:
+  formats_accepted: [png, tiff, eps, svg]
+  min_dpi: 300
+  max_file_size_mb: 10
+  color_mode: [rgb, grayscale]
+  placement: separate_files                 # inline | end_of_doc | separate_files
+  captions_required: true
+  font: null                                # null = any | "Arial" (JM requirement)
+  separate_caption_page: false
+  source_files_on_acceptance: false         # true for JM (Excel/PPT originals)
+
+# ── Tables ────────────────────────────────────────────────────
+tables:
+  format: word                              # word | csv | markdown | separate_docx
+  placement: inline                         # inline | end_of_doc | separate_files
+  max_count: null
+  footnote_style: superscript_letters       # superscript_letters | superscript_numbers | asterisks
+
+# ── Math ──────────────────────────────────────────────────────
+math:
+  equation_format: mathtype                 # mathtype | latex_inline | word_equation_editor
+  leading_zero: true                        # false for JM (.97 not 0.97)
+  max_decimal_places: 3
+  p_value_format: exact                     # exact | threshold (< .05)
+
+# ── Blinding ──────────────────────────────────────────────────
+blinding:
+  mode: double_blind                        # double_blind | single_blind | open
+  strip_author_names: true
+  strip_affiliations: true
+  strip_orcids: true
+  strip_acknowledgments: true
+  strip_self_citation_details: true         # replace with "[Author, Year]"
+  strip_self_citation_dois: true
+  strip_figure_metadata: true               # EXIF, embedded properties
+  strip_document_properties: true           # Word/PDF author metadata
+  preserve_roles: true                      # show "Author 1 (methodology)" without name
+  title_page_separate: true
+
+# ── Required Statements ───────────────────────────────────────
+statements:
+  ai_disclosure:
+    required: true
+    location: before_references             # before_references | acknowledgments | title_page | cover_letter
+  data_availability:
+    required: true
+    location: title_page
+    conceptual_text: "Not applicable — this article describes theoretical research."
+  funding:
+    required: true
+    location: title_page
+    no_funding_text: "This research received no specific grant from any funding agency."
+  conflict_of_interest:
+    required: true
+    location: before_references
+    no_conflict_text: "The corresponding author states that there is no conflict of interest."
+  ethics:
+    required: false
+  credit_author_contributions:
+    required: false
+    taxonomy: credit                        # credit | free_form
+
+# ── Cover Letter ──────────────────────────────────────────────
+cover_letter:
+  required: true
+  method: paste                             # paste (in portal field) | upload (separate file)
+  must_include:
+    - paper_title
+    - article_type
+    - not_under_review_statement
+    - contribution_summary
+  optional:
+    - prior_submission_disclosure
+    - preprint_disclosure
+
+# ── Suggested Reviewers / Editors ─────────────────────────────
+reviewers:
+  suggested_count:
+    min: 3
+    max: 5
+  format: "Name (Institution) — rationale"
+  from_editorial_board: false               # true for MKSC
+  excluded_reviewers_field: true
+
+editors:
+  suggested_count:
+    min: 0
+    max: 3
+
+# ── Preprint Policy ──────────────────────────────────────────
+preprint:
+  allowed: true
+  freeze_during_review: false               # true for JM
+  no_public_posting: false                  # true for AMR
+  disclosure_required: true
+  preprint_doi_field: true
+
+# ── Special Requirements ──────────────────────────────────────
+special:
+  highlights_file:
+    required: false                         # true for Elsevier journals
+    max_bullets: 5
+    max_chars_per_bullet: 85
+  graphical_abstract:
+    required: false                         # true for MethodsX
+    width_px: null
+    height_px: null
+  running_title:
+    required: true
+    max_chars: 40
+  author_biography:
+    required: false
+    max_words: 80
+  contribution_statement:
+    required: false                         # true for MKSC (ScholarOne Step 6)
+    max_words: 300
+  footnote_limit:
+    max_count: null                         # 10 for JM
+    max_words_each: null                    # 40 for JM
+
+# ── Open Access ───────────────────────────────────────────────
+open_access:
+  model: hybrid                             # subscription | gold | diamond | hybrid
+  apc_amount: null                          # null = free (subscription route)
+  apc_currency: null
+  waiver_available: false
+
+# ── Git-Link Submission (hybrid flow) ─────────────────────────
+# If the journal supports git-linked submission, the author can link
+# their paper repository instead of uploading files. The portal handles
+# metadata; the repo handles the manuscript.
+git_submission:
+  supported: false                          # true if journal accepts git-linked papers
+  link_method: orcid_style                  # orcid_style (OAuth link on portal)
+  accepted_hosts: [github, gitlab, gitea]   # any git host with public API
+  fork_on_submission: true                  # journal creates fork automatically
+  compliance_gate: true                     # run journal_spec validation on fork

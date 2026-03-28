@@ -1,0 +1,173 @@
+# paper_repo.yaml — Paper repository structure specification
+# Part of the Paper-as-Repository protocol (Zharnikov, 2026u)
+#
+# Defines the required and optional files in a paper repository.
+# A compliant repository can be validated against this schema.
+#
+# Schema version: 0.1.0
+
+schema_version: "0.1.0"
+
+# ── Required Files ────────────────────────────────────────────
+required:
+  manuscript:
+    path: "paper.md"                        # or paper.tex, paper.qmd
+    formats: [markdown, latex, quarto, rmarkdown]
+    description: "The manuscript source — single source of truth"
+
+  paper_spec:
+    path: "paper.yaml"
+    description: "Paper Spec companion — claims, methods, acceptance criteria"
+    schema: "https://github.com/spectralbranding/paper-spec/SPECIFICATION.md"
+
+  contributors:
+    path: "CONTRIBUTORS.yaml"
+    description: "Contributor roles verified against commit history"
+    schema: "#/schemas/contributors"
+
+  provenance:
+    path: "PROVENANCE.yaml"
+    description: "Fork history, submission records, review decisions"
+    schema: "#/schemas/provenance"
+
+  license:
+    path: "LICENSE"
+    description: "Content license (CC-BY-4.0 recommended for OA)"
+
+# ── Optional Files ────────────────────────────────────────────
+optional:
+  data_manifest:
+    path: "DATA_MANIFEST.yaml"
+    description: "Links to external data archives (DOI, checksum, access conditions)"
+    schema: "#/schemas/data_manifest"
+
+  config:
+    path: ".paperrc"
+    description: "Repository configuration (default render format, CI settings)"
+
+  cover_letter:
+    path: "cover_letter.md"
+    description: "Cover letter template (parameterized per journal)"
+
+  data:
+    path: "data/"
+    description: "Data files, analysis scripts, computational notebooks"
+
+  figures:
+    path: "figures/"
+    description: "Generated figures (source-controlled, not binary blobs)"
+
+  supplements:
+    path: "supplements/"
+    description: "Appendices, web supplements, extended tables"
+
+  citation:
+    path: "CITATION.cff"
+    description: "Citation File Format for GitHub/Zenodo integration"
+
+# ── Schemas ───────────────────────────────────────────────────
+schemas:
+
+  contributors:
+    type: object
+    required: [contributors]
+    properties:
+      contributors:
+        type: array
+        items:
+          type: object
+          required: [name, roles]
+          properties:
+            name:
+              type: string
+            orcid:
+              type: string
+              pattern: "^0000-000[0-9]-[0-9]{4}-[0-9]{3}[0-9X]$"
+            type:
+              type: string
+              enum: [human, ai_tool, organization]
+              default: human
+            roles:
+              type: array
+              items:
+                type: string
+                enum:
+                  - conceptualization
+                  - data-curation
+                  - formal-analysis
+                  - funding-acquisition
+                  - investigation
+                  - methodology
+                  - project-administration
+                  - resources
+                  - software
+                  - supervision
+                  - validation
+                  - visualization
+                  - writing-original
+                  - writing-review
+                  - consistency-checking
+            affiliation:
+              type: string
+            commits:
+              type: integer
+              description: "Auto-populated from git log"
+            first_commit:
+              type: string
+              format: date
+            last_commit:
+              type: string
+              format: date
+            disclosure:
+              type: string
+              description: "For AI tools: usage description"
+
+  provenance:
+    type: object
+    required: [forks]
+    properties:
+      forks:
+        type: array
+        description: "Append-only list of all forks created from this repository"
+        items:
+          type: object
+          required: [id, target, target_type, created, source_commit, status]
+          properties:
+            id:
+              type: string
+              description: "Unique fork identifier"
+            target:
+              type: string
+              description: "Name of receiving entity (journal, preprint server, collaborator)"
+            target_type:
+              type: string
+              enum: [journal, preprint_server, institution, collaborator, collection]
+            created:
+              type: string
+              format: date-time
+            source_commit:
+              type: string
+              description: "Git commit hash at fork point"
+            status:
+              type: string
+              enum: [active, returned, revoked]
+            decision:
+              type: string
+              enum: [null, accepted, rejected, revise_resubmit, desk_rejected]
+            decision_date:
+              type: string
+              format: date
+            decision_public:
+              type: boolean
+              default: false
+              description: "Author controls whether decision is visible"
+            reviewers:
+              type: integer
+              description: "Number of reviewers (aggregate, anonymized)"
+            review_depth:
+              type: integer
+              description: "Total comment lines (aggregate)"
+            prior_forks_visible:
+              type: boolean
+              default: true
+              description: "Whether this fork's recipient can see prior forks"

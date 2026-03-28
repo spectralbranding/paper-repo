@@ -1,0 +1,130 @@
+# journal_spec.yaml — Journal of Marketing (JM)
+# Derived from actual JM submission requirements (2026)
+# Demonstrates the journal_spec schema with real-world data
+
+schema_version: "0.1.0"
+
+journal:
+  name: "Journal of Marketing"
+  issn: "0022-2429"
+  publisher: "SAGE / American Marketing Association"
+  submission_system: ScholarOne
+  portal_url: "https://mc.manuscriptcentral.com/jm"
+
+manuscript:
+  types_accepted: [research_article]
+  format:
+    source: [markdown, latex]
+    submission: [docx]
+    font: "Times New Roman"
+    font_size: 12
+    line_spacing: double
+    margins_inches: 1.0
+    page_numbers: prohibited               # JM explicitly prohibits page numbers
+
+  word_count:
+    min: null
+    max: null                               # JM uses page limit, not word limit
+    page_limit: 50                          # 50 pages all-inclusive
+    includes: [body, references, tables, figures, appendices]
+
+  heading_format:
+    numbered: false
+    introduction_labeled: false             # JM: do NOT label "Introduction"
+    levels: 3
+    level1: "centered, bold, title case"
+    level2: "flush-left, bold+italic, title case"
+    level3: "left-justified, italic, sentence case"
+
+abstract:
+  max_words: 200
+  structure: unstructured
+  person: third                             # JM requires third-person abstract
+  references_allowed: false
+
+keywords:
+  min: 2
+  max: 8
+  source: free_form
+  topics_dropdown:
+    min: 2
+    max: 6
+  methods_dropdown:
+    min: 1
+    max: 6
+
+references:
+  style: ama                                # AMA house style (not standard APA)
+  author_name_format: full_first_names      # JM requires full first names
+  et_al_threshold: 4                        # list all up to 3, et al. for 4+
+  doi_required: false
+  self_citation_max_percent: null
+
+figures:
+  formats_accepted: [png, tiff, jpeg]
+  min_dpi: 300
+  color_mode: [grayscale]                   # color costs borne by author
+  placement: inline
+  font: "Arial"                             # JM requires Arial in figures
+  source_files_on_acceptance: true          # must submit Excel/PPT originals
+
+tables:
+  format: word
+  placement: inline
+
+math:
+  leading_zero: false                       # JM: .97 not 0.97
+  max_decimal_places: 3
+  p_value_format: exact                     # actual p-values, not thresholds
+
+blinding:
+  mode: double_blind
+  strip_author_names: true
+  strip_affiliations: true
+  strip_orcids: true
+  strip_acknowledgments: true
+  strip_self_citation_details: true
+  strip_document_properties: true
+  title_page_separate: true
+
+statements:
+  ai_disclosure:
+    required: true
+    location: methods_and_acknowledgments
+  data_availability:
+    required: true
+    location: title_page
+  funding:
+    required: true
+    location: title_page
+  conflict_of_interest:
+    required: true
+    location: title_page
+
+cover_letter:
+  required: true
+  method: paste                             # paste in ScholarOne field
+
+reviewers:
+  suggested_count:
+    min: 0
+    max: 5
+
+editors:
+  suggested_count:
+    min: 0
+    max: 2
+
+preprint:
+  allowed: true
+  freeze_during_review: true                # JM requires preprint frozen
+  disclosure_required: true
+
+special:
+  footnote_limit:
+    max_count: 10
+    max_words_each: 40
+  no_headers_footers: true                  # JM: no page numbers, no headers/footers
+
+git_submission:
+  supported: false

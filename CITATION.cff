@@ -1,0 +1,27 @@
+cff-version: 1.2.0
+title: "Paper Repo: A Git-Native Protocol for Scientific Publishing"
+message: "If you use this protocol, please cite it using these metadata."
+type: software
+version: "0.1.0"
+date-released: "2026-03-28"
+authors:
+  - family-names: "Zharnikov"
+    given-names: "Dmitry"
+    orcid: "https://orcid.org/0009-0000-6893-9231"
+repository-code: "https://github.com/spectralbranding/paper-repo"
+license: MIT
+keywords:
+  - scientific publishing
+  - version control
+  - peer review
+  - research infrastructure
+  - Git
+preferred-citation:
+  type: article
+  authors:
+    - family-names: "Zharnikov"
+      given-names: "Dmitry"
+      orcid: "https://orcid.org/0009-0000-6893-9231"
+  title: "Paper as repository: A Git-native protocol for scientific publishing"
+  year: 2026
+  journal: "Zenodo"

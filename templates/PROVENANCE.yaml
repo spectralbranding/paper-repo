@@ -1,0 +1,20 @@
+# PROVENANCE.yaml — Template
+# Fork history is append-only. Each fork is irrevocable.
+
+provenance:
+  paper_title: "Your Paper Title"
+  citation_key: ""
+  repository: ""
+
+  forks: []
+  # Populated when you submit to a venue:
+  #
+  # - id: "fork-YYYY-MM-DD-venue"
+  #   target: "Journal Name"
+  #   target_type: journal     # journal | preprint_server | institution | collaborator
+  #   created: "YYYY-MM-DDThh:mm:ssZ"
+  #   source_commit: "abc1234"
+  #   status: active           # active | returned | revoked
+  #   decision: null           # null | accepted | rejected | revise_resubmit | desk_rejected
+  #   decision_date: null
+  #   decision_public: false   # you control whether the decision is visible

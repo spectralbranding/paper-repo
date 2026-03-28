@@ -1,0 +1,29 @@
+# CONTRIBUTORS.yaml — R13 Paper as Specification
+# Demonstrates verified contributor attribution per Paper-as-Repository protocol
+
+contributors:
+  - name: "Dmitry Zharnikov"
+    orcid: "0009-0000-6893-9231"
+    type: human
+    roles:
+      - conceptualization
+      - methodology
+      - writing-original
+      - project-administration
+    affiliation: "Independent Researcher"
+    commits: 47
+    first_commit: "2026-03-22"
+    last_commit: "2026-03-26"
+
+  - name: "Claude (Anthropic)"
+    type: ai_tool
+    roles:
+      - writing-review
+      - consistency-checking
+      - formal-analysis
+    disclosure: >
+      AI tools (Claude, Anthropic) were used for manuscript preparation,
+      mathematical verification, cross-reference consistency checking,
+      and editorial review. All theoretical contributions, propositions,
+      and interpretive conclusions are solely the author's work.
+    commits: 0  # AI contributions tracked via author commits

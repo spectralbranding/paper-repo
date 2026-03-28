@@ -1,0 +1,26 @@
+# PROVENANCE.yaml — R14: Paper as Repository
+# Fork history and submission records per the Paper-as-Repository protocol
+# This file IS the protocol's own PROVENANCE.yaml — self-referential by design.
+
+provenance:
+  paper_title: "Paper as Repository: A Git-Native Protocol for Scientific Publishing"
+  citation_key: "2026u"
+  repository: "spectral-branding/research/R14_paper_as_repository.md"
+
+  forks: []
+  # No forks yet — this will be populated when:
+  # 1. The paper is uploaded to Zenodo (fork to preprint server)
+  # 2. The paper is submitted to a journal (fork to journal)
+  #
+  # Example of what a fork entry will look like:
+  #
+  # - id: "fork-2026-04-XX-zenodo"
+  #   target: "Zenodo"
+  #   target_type: preprint_server
+  #   created: "2026-04-XX"
+  #   source_commit: "XXXXXXX"
+  #   status: active
+  #   decision: null
+  #   identifiers:
+  #     doi: "10.5281/zenodo.XXXXXXX"
+  #     community: "spectral-branding"

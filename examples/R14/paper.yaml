@@ -1,0 +1,174 @@
+# paper.yaml — R14: Paper as Repository
+# This file IS the Paper Spec companion for the paper that proposes Paper Spec companions.
+# Citation key: 2026u
+# Paper Spec schema: https://github.com/spectralbranding/paper-spec/SPECIFICATION.md
+
+paper_spec_version: "0.1.0"
+
+metadata:
+  title: "Paper as Repository: A Git-Native Protocol for Scientific Publishing"
+  authors:
+    - name: "Dmitry Zharnikov"
+      orcid: "0009-0000-6893-9231"
+      affiliation: "Independent Researcher"
+      corresponding: true
+  citation_key: "2026u"
+  date: "2026-03-28"
+  version: "0.4.0"
+  status: working_paper
+  keywords:
+    - scientific publishing
+    - version control
+    - peer review
+    - research infrastructure
+    - open science
+    - provenance
+
+claims:
+  - id: C1
+    type: design_claim
+    statement: >
+      A Git-native protocol that treats papers as repositories and submissions
+      as forks can structurally address five gaps in the current publishing
+      system: no version history, no contributor traceability, no submission
+      provenance, no review attribution, and no machine interface.
+    falsification: >
+      Show that one or more of the five gaps cannot be addressed by the
+      proposed protocol mechanisms, or that the protocol introduces worse
+      problems than it solves.
+    depends_on: []
+
+  - id: C2
+    type: design_claim
+    statement: >
+      Fork-based submission with irrevocable provenance records makes dual
+      submission structurally detectable within the protocol.
+    falsification: >
+      Demonstrate a realistic scenario where an author can submit the same
+      paper to two journals via the protocol without either journal detecting
+      the other fork.
+    depends_on: [C1]
+
+  - id: C3
+    type: design_claim
+    statement: >
+      Journal submission requirements can be encoded as machine-readable
+      journal_spec.yaml files, enabling automated compliance validation
+      that eliminates formatting-related desk rejections.
+    falsification: >
+      Identify a class of journal requirements that cannot be expressed
+      in the proposed schema, or show that the validator produces false
+      positives/negatives at rates that make it impractical.
+    evidence: "Reference validator (validate_paper.py) + JM spec (journal_spec_jm.yaml)"
+    depends_on: [C1]
+
+  - id: C4
+    type: design_claim
+    statement: >
+      Reviewer contributions can be tracked as typed, attributed commits
+      on review branches, creating portable review portfolios that
+      make invisible review labor visible and creditable.
+    falsification: >
+      Show that the commit-based review model introduces perverse incentives
+      (e.g., inflated commit counts, shallow-but-numerous commits) that
+      degrade review quality compared to the current system.
+    depends_on: [C1]
+
+  - id: C5
+    type: design_claim
+    statement: >
+      Blinding can be implemented as an automated system function applied
+      to forks, offering structural advantages over manual author blinding.
+    falsification: >
+      Identify information channels in Git repositories that the automated
+      blinding function cannot strip without destroying the manuscript
+      content (beyond the known limitations of commit-author metadata,
+      which requires pseudonymization rather than removal).
+    depends_on: [C1]
+
+  - id: C6
+    type: design_claim
+    statement: >
+      Preprint servers, journals, and institutional repositories can be
+      modeled as users on a federated platform who accept frozen forks
+      into curated collections, eliminating format conversion, multiple
+      uploads, and version fragmentation.
+    falsification: >
+      Show that the collections-as-users model cannot accommodate a
+      significant class of existing repositories (e.g., those requiring
+      JATS XML ingest) without format conversion, contradicting the
+      "eliminate format conversion" claim.
+    depends_on: [C1]
+
+  - id: C7
+    type: interpretive_claim
+    statement: >
+      The existing landscape of publishing reform tools (Manubot, JOSS,
+      ORKG, COAR Notify, Signposting, CryptSubmit) each optimize individual
+      stations on the publishing production line without redesigning the
+      production line itself. The protocol's contribution is the integration.
+    falsification: >
+      Identify an existing system that integrates all five features
+      (version-controlled authoring, fork-based submission, compliance gate,
+      reviewer attribution, provenance chain) in a single protocol.
+    depends_on: []
+
+methodology:
+  type: conceptual_protocol_design
+  approach: >
+    Structural analysis of the current publishing pipeline identifies five
+    gaps. A protocol is proposed that addresses all five through Git-native
+    mechanisms. Feasibility is demonstrated through a reference implementation
+    (validator + schemas) and a worked example (Journal of Marketing spec).
+    The paper itself serves as its own first implementation — authored in a
+    Git repository with CONTRIBUTORS.yaml, PROVENANCE.yaml, paper.yaml,
+    and DATA_MANIFEST.yaml.
+  tools:
+    - "Python 3.12 (validator)"
+    - "YAML (schemas)"
+    - "Git (version control)"
+
+limitations:
+  - id: L1
+    description: "No full prototype of fork-based submission or reviewer branch model"
+  - id: L2
+    description: "No empirical data on adoption likelihood or efficiency gains"
+  - id: L3
+    description: "Git literacy barrier excludes many researchers in non-computational fields"
+  - id: L4
+    description: "Legal status of reviewer commits under copyright law is untested"
+  - id: L5
+    description: "Irrevocable provenance chain raises privacy concerns that may vary by discipline"
+
+dependencies:
+  - citation: "Zharnikov (2026t)"
+    doi: "10.5281/zenodo.19210037"
+    relationship: "extends"
+    criticality: high
+    description: "Paper Spec provides the content specification layer; this paper provides the process layer"
+
+  - citation: "Himmelstein et al. (2019)"
+    doi: "10.1371/journal.pcbi.1007128"
+    relationship: "builds_on"
+    criticality: medium
+    description: "Manubot established Git-native manuscript authoring; this paper extends to full lifecycle"
+
+  - citation: "Torvalds (2005)"
+    relationship: "applies"
+    criticality: high
+    description: "Git provides the underlying version control semantics the protocol is built on"
+
+submission_history:
+  - venue: "Zenodo"
+    type: preprint
+    date: null
+    status: pending
+    manuscript_id: null
+    doi: null
+
+ai_disclosure: >
+  AI tools (Claude, Anthropic) were used for manuscript preparation,
+  literature review, schema design, and validator implementation.
+  The Gemini Deep Research and Grok platforms were used for prior art
+  landscape mapping. All theoretical contributions, protocol design
+  decisions, and interpretive claims are solely the author's work.

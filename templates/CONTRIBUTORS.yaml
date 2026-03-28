@@ -1,0 +1,20 @@
+# CONTRIBUTORS.yaml — Template
+# Replace with your paper's contributor information.
+# Roles follow CRediT taxonomy: https://credit.niso.org/
+
+contributors:
+  - name: "First Author"
+    orcid: "0000-0000-0000-0000"
+    type: human
+    roles:
+      - conceptualization
+      - methodology
+      - writing-original
+    affiliation: "University of Example"
+
+  # Add AI tools used:
+  # - name: "Claude (Anthropic)"
+  #   type: ai_tool
+  #   roles:
+  #     - writing-review
+  #   disclosure: "Describe how the AI tool was used"

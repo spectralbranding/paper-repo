@@ -1,0 +1,14 @@
+# DATA_MANIFEST.yaml — Template
+# Links to external data archives. Empty for conceptual papers.
+
+data_manifest: []
+# For papers with external data:
+#
+# - id: "dataset-name"
+#   description: "Description of the dataset"
+#   archive: "Zenodo"          # Zenodo | Dryad | Figshare | GenBank | PDB | etc.
+#   doi: "10.5281/zenodo.XXXXXXX"
+#   size_gb: 1.2
+#   format: "CSV"
+#   checksum_sha256: "abc123..."
+#   access: public             # public | restricted (requires DUA)
