@@ -1,5 +1,5 @@
 # PROVENANCE.yaml — R13 Paper as Specification
-# Demonstrates fork-based submission provenance per Paper-as-Repository protocol
+# Demonstrates fork-based submission provenance per Research-as-Repository protocol
 
 provenance:
   paper_title: "Paper as specification: A machine-readable standard for scientific claims"
@@ -12,8 +12,8 @@ provenance:
       target_type: preprint_server
       created: "2026-03-26T10:00:00Z"
       source_commit: "a1b2c3d"
-      status: returned
-      decision: accepted
+      status: merged  # fork merged into Zenodo collection
+      outcome: merged
       decision_date: "2026-03-26"
       decision_public: true
       identifiers:
