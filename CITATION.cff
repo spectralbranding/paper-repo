@@ -1,5 +1,5 @@
 cff-version: 1.2.0
-title: "Paper Repo: A Git-Native Protocol for Scientific Publishing"
+title: "Research Repo: A Git-Native Protocol for Scientific Knowledge Production"
 message: "If you use this protocol, please cite it using these metadata."
 type: software
 version: "0.1.0"
@@ -22,6 +22,6 @@ preferred-citation:
     - family-names: "Zharnikov"
       given-names: "Dmitry"
       orcid: "https://orcid.org/0009-0000-6893-9231"
-  title: "Paper as repository: A Git-native protocol for scientific publishing"
+  title: "Research as repository: A Git-native protocol for scientific knowledge production"
   year: 2026
   journal: "Zenodo"

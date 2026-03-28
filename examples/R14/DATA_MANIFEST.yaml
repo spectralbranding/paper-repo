@@ -1,5 +1,5 @@
-# DATA_MANIFEST.yaml — R14: Paper as Repository
-# External data dependencies per the Paper-as-Repository protocol
+# DATA_MANIFEST.yaml — R14: Research as Repository
+# External data dependencies per the Research-as-Repository protocol
 # This paper is conceptual — no external experimental data.
 
 data_manifest: []

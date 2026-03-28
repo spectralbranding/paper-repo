@@ -1,8 +1,8 @@
-# Paper Repo: A Git-Native Protocol for Scientific Publishing
+# Research Repo: A Git-Native Protocol for Scientific Knowledge Production
 
 A research program is not a sequence of documents. It is a repository.
 
-**Paper Repo** defines a protocol for managing scientific research as version-controlled repositories — where papers are tagged releases forked to journals for community review, with automated compliance gates, attributed reviewer commits, and provenance chains that make the full research lifecycle machine-readable.
+**Research Repo** defines a protocol for managing scientific research as version-controlled repositories — where papers are tagged releases forked to journals for community review, with automated compliance gates, attributed reviewer commits, and provenance chains that make the full research lifecycle machine-readable.
 
 ## Core Concept
 
@@ -123,7 +123,7 @@ They compose: `paper.yaml` is one file in the paper repository. Paper Spec valid
 
 ## Research Paper
 
-Zharnikov, D. (2026u). Paper as Repository: A Git-Native Protocol for Scientific Publishing. Working Paper.
+Zharnikov, D. (2026u). Research as Repository: A Git-Native Protocol for Scientific Knowledge Production. Working Paper.
 
 ## Related
 
