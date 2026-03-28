@@ -22,7 +22,7 @@ The global scientific publishing system processes approximately 3 million papers
 
 This assumption was adequate when papers were physically printed and mailed. It is now the binding constraint on every reform the scientific community has attempted in the past two decades.
 
-Open access reforms change *who can read* the document. They do not change the document. Preprint servers change *when* the document becomes available. They do not change its structure. Registered reports change *what sequence* the document follows. They do not change how it is tracked. Post-publication review adds commentary *about* the document. It does not integrate with the document's own history.
+Open access reforms — accelerated by mandates such as Plan S (cOAlition S, 2018) — change *who can read* the document. They do not change the document. Preprint servers change *when* the document becomes available. They do not change its structure. Registered reports change *what sequence* the document follows. They do not change how it is tracked. Post-publication review adds commentary *about* the document. It does not integrate with the document's own history.
 
 Each reform addresses one dimension of the publishing problem while leaving the document assumption intact. The result is a system that has been incrementally improved on six dimensions simultaneously — access, timing, sequence, commentary, data sharing, reproducibility — without any reform touching the structural foundation that constrains all of them.
 
@@ -647,7 +647,7 @@ Each reviewer's branch is a complete, timestamped, attributed record of their re
 - **How deeply** they engaged (number of commits, lines of commentary)
 - **What they recommended** (final commit on the branch)
 
-The reviewer's identity on the branch is controlled by the editor:
+The protocol supports all modes identified in Ross-Hellauer's (2017) systematic taxonomy of open peer review, and the structured commit model accommodates the emergent innovations catalogued by Tennant et al. (2017). The reviewer's identity on the branch is controlled by the editor:
 
 - **Open review**: real name and ORCID visible
 - **Single-blind**: reviewer identity visible to editor only; authors see "Reviewer 1"
@@ -680,7 +680,7 @@ review_history:
       visible: false    # reviewer chose to keep private
 ```
 
-The reviewer controls which individual reviews are public, but aggregate statistics (total count, average depth, journal list) are always visible. This creates verifiable review reputation without requiring full transparency.
+The reviewer controls which individual reviews are public, but aggregate statistics (total count, average depth, journal list) are always visible. Early evidence suggests that open reviewer identification does not reduce review quality (van Rooyen et al., 1999). This creates verifiable review reputation without requiring full transparency.
 
 **Consequences for reviewer incentives:**
 
@@ -904,11 +904,11 @@ The four-level hierarchy introduced in Section 1.1 — repository, paper, fork, 
 
 **Cross-domain comparison.** The same three-layer structure appears across the sibling frameworks in this research program:
 
-| Layer | Branding (SBT) | Organization (OST) | Research (this protocol) |
-|-------|----------------|---------------------|--------------------------|
-| Specification | Brand spec (8 dimensions) | Org schema (L0-L5 cascade) | Research repository (versioned SSOT) |
-| Implementation / Render | Brand signals (emissions) | Operations (processes) | Paper (frozen snapshot) |
-| Perception | Perception cloud (observer-dependent) | Performance metrics | Community evaluation (peer review) |
+| Structural layer          | Branding (SBT)             | Organization (OST)         | Research (this protocol)   |
+|---------------------------|----------------------------|----------------------------|----------------------------|
+| Specification             | Brand spec (8 dimensions)  | Org schema (L0-L5)         | Research repository (SSOT) |
+| Implementation / Render   | Brand signals (emissions)  | Operations (processes)     | Paper (frozen snapshot)    |
+| Perception / Evaluation   | Perception cloud (observer)| Performance metrics        | Community review (peers)   |
 
 The rendering is lossy at every layer. A brand specification cannot be fully conveyed by any finite set of signals. An organizational schema cannot be perfectly executed by any operational process. A research repository cannot be fully captured by any single paper. And the perception is observer-dependent: different consumers perceive different brands from the same signals; different employees experience different organizations from the same processes; different reviewers perceive different papers from the same manuscript.
 
@@ -1021,7 +1021,7 @@ These metrics are evaluation criteria for future pilots, not claims of achieved 
 
 ### 5.4 Stakeholder Incentives and Barriers
 
-**Publishers.** Traditional publishers derive revenue from controlling the manuscript pipeline — submission portals, typesetting, branding, and access. The protocol disperses this control. The protocol's adoption does not require traditional publisher cooperation — it routes around them via preprint servers (which already accept structured deposits), overlay journals (which already curate externally hosted papers), and society publishers (which often operate at cost and may value the efficiency gains). Open-access publishers whose revenue comes from APCs rather than pipeline control are natural early adopters — the protocol reduces their operational costs without threatening their business model. Traditional publishers can join when the network effects make it costly not to.
+**Publishers.** The publisher oligopoly (Lariviere et al., 2015) derives revenue from controlling the manuscript pipeline — submission portals, typesetting, branding, and access. The protocol disperses this control. The protocol's adoption does not require traditional publisher cooperation — it routes around them via preprint servers (which already accept structured deposits), overlay journals (which already curate externally hosted papers), and society publishers (which often operate at cost and may value the efficiency gains). Open-access publishers whose revenue comes from APCs rather than pipeline control are natural early adopters — the protocol reduces their operational costs without threatening their business model. Traditional publishers can join when the network effects make it costly not to.
 
 **Editors.** The compliance gate eliminates formatting desk rejections — a direct time savings. The reviewer branch model provides structured data on reviewer engagement — useful for identifying reliable reviewers. Editors benefit immediately from the gate and incrementally from the review model. The hybrid flow (Section 2.2) provides a transitional compatibility mode, but the git-native flow gives editors structural advantages — version history, contributor verification, and diff capability — that the traditional flow cannot match.
 
@@ -1071,8 +1071,6 @@ Barker, M., Chue Hong, N. P., Katz, D. S., et al. (2022). Introducing the FAIR P
 
 Bryan, J. (2018). Excuse me, do you have a moment to talk about version control? *The American Statistician*, 72(1), 20-27. https://doi.org/10.1080/00031305.2017.1399928
 
-Borgman, C. L. (2007). *Scholarship in the Digital Age: Information, Infrastructure, and the Internet*. MIT Press.
-
 Chambers, C. D. (2013). Registered Reports: A new publishing initiative at Cortex. *Cortex*, 49(3), 609-610.
 
 cOAlition S. (2018). Plan S: Making full and immediate Open Access a reality. https://www.coalition-s.org/
@@ -1085,8 +1083,6 @@ San Francisco Declaration on Research Assessment (DORA). (2012).
 
 Auer, S., Kovtun, V., Prinz, M., Kasprzik, A., Stocker, M., & Vidal, M. E. (2019). Towards an Open Research Knowledge Graph. *Serials Review*, 45(4). https://doi.org/10.1080/0361526X.2019.1540272
 
-Clark, T., Ciccarese, P. N., & Goble, C. A. (2014). Micropublications: A semantic model for claims, evidence, arguments and annotations in biomedical communications. *Journal of Biomedical Semantics*, 5(28). https://doi.org/10.1186/2041-1480-5-28
-
 COAR Notify. (2023). COAR Notify Protocol: Linked data notifications for scholarly communication. https://notify.coar-repositories.org/
 
 DataCite. (2024). DataCite Metadata Schema. https://schema.datacite.org/
@@ -1095,13 +1091,9 @@ Eisen, M. B., Akhmanova, A., Behrens, T. E., et al. (2022). Implementing a "Publ
 
 Freeman, A. (2021). Octopus: A new approach to scientific publishing. https://www.octopus.ac/
 
-Di Cosmo, R., & Zacchiroli, S. (2019). Software Heritage: Why and How to Preserve Software Source Code. arXiv:1909.10760.
-
 Gipp, B., Meuschke, N., & Gernandt, A. (2017). Decentralized Trusted Timestamping using the Crypto Currency Bitcoin. *Proceedings of the ACM/IEEE Joint Conference on Digital Libraries (JCDL)*.
 
 GitHub. (2008). GitHub: Social coding platform. https://github.com/
-
-Groth, P., Gibson, A., & Velterop, J. (2010). The Anatomy of a Nanopublication. *Information Services & Use*, 30(1-2), 51-56.
 
 Hammer, M., & Champy, J. (1993). *Reengineering the Corporation: A Manifesto for Business Revolution*. Harper Business.
 
@@ -1119,11 +1111,7 @@ Nosek, B. A., Alter, G., Banks, G. C., et al. (2015). Promoting an open research
 
 Ohno, T. (1988). *Toyota Production System: Beyond Large-Scale Production*. Productivity Press.
 
-Peroni, S., & Shotton, D. (2012). FaBiO and CiTO: Ontologies for describing bibliographic resources and citations. *Journal of Web Semantics*, 17, 33-43. https://doi.org/10.1016/j.websem.2012.08.001
-
 Ram, K. (2013). Git can facilitate greater reproducibility and increased transparency in science. *Source Code for Biology and Medicine*, 8(1), 7.
-
-Robinson, D. C., Hand, J. A., Madsen, M. B., & McKelvey, K. R. (2018). The Dat Project, an open and decentralized research data tool. *Scientific Data*, 5, 180221. https://doi.org/10.1038/sdata.2018.221
 
 Ross-Hellauer, T. (2017). What is open peer review? A systematic review. *F1000Research*, 6, 588. https://doi.org/10.12688/f1000research.11369.2
 
