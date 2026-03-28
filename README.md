@@ -91,6 +91,14 @@ cp /path/to/paper-repo/templates/* .
 | [`examples/R13_PROVENANCE.yaml`](examples/R13_PROVENANCE.yaml) | Fork history: Zenodo preprint + QSS submission |
 | [`examples/R14/`](examples/R14/) | **This protocol's own paper** — self-referential implementation |
 
+## AI Traceability by Design
+
+Git doesn't just track your work. It tracks your AI's work too.
+
+Every AI-assisted edit in a paper repository becomes a commit with metadata: the tool used, the model version, and what changed. When Claude rewrites Section 3, that's a commit. When Gemini generates a figure, that's a commit. The contribution is recorded not because the author declared it on a form, but because the system recorded it.
+
+This solves the AI disclosure problem that journals are currently addressing with honor-system checkboxes. In a paper repository, AI contribution is structurally transparent and auditable by construction. The `CONTRIBUTORS.yaml` file maps every contributor (human and AI) to their verified commit history.
+
 ## This Paper Eats Its Own Dogfood
 
 The research paper proposing this protocol ([R14](examples/R14/paper.md)) is itself structured as a compliant paper repository. Its `paper.yaml` contains 7 typed claims with falsification conditions. Its `CONTRIBUTORS.yaml` lists 4 contributors (1 human + 3 AI tools). Its `PROVENANCE.yaml` will be populated as the paper is submitted to venues.
