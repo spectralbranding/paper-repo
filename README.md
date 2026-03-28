@@ -15,12 +15,12 @@ The root cause: the system treats a paper as a static document (a PDF) rather th
 | Feature | What it does |
 |---|---|
 | **Paper repository** | Every paper is a Git repo with structured metadata (paper.yaml, CONTRIBUTORS.yaml, PROVENANCE.yaml) |
-| **Fork-based submission** | Submitting to a journal creates a frozen, cryptographically linked fork |
-| **Compliance gate** | Journal publishes `journal_spec.yaml`; validator checks compliance before fork is accepted |
+| **Fork-based submission** | A fork request to a journal creates a frozen, cryptographically linked fork |
+| **Compliance gate** | Journal publishes `journal_spec.yaml`; validator checks compliance before fork request is processed |
 | **Blinding as function** | Reviewer anonymization is automated per journal config, not manual |
 | **Reviewer attribution** | Reviews are typed commits on branches — creating portable reviewer portfolios |
 | **Provenance by design** | Every fork is irrevocably recorded; dual submission becomes structurally detectable |
-| **Collections as users** | Journals, preprint servers, archives are users who accept forks into curated collections |
+| **Collections as users** | Journals, preprint servers, archives are collection users who curate forks |
 | **Hybrid submission** | Git-linked submission coexists with traditional upload (like ORCID linking) |
 | **Federation** | No central platform — any institution runs its own server |
 
@@ -101,7 +101,7 @@ This solves the AI disclosure problem that journals are currently addressing wit
 
 ## This Paper Eats Its Own Dogfood
 
-The research paper proposing this protocol ([R14](examples/R14/paper.md)) is itself structured as a compliant paper repository. Its `paper.yaml` contains 7 typed claims with falsification conditions. Its `CONTRIBUTORS.yaml` lists 4 contributors (1 human + 3 AI tools). Its `PROVENANCE.yaml` will be populated as the paper is submitted to venues.
+The research paper proposing this protocol ([R14](examples/R14/paper.md)) is itself structured as a compliant paper repository. Its `paper.yaml` contains 7 typed claims with falsification conditions. Its `CONTRIBUTORS.yaml` lists 4 contributors (1 human + 3 AI tools). Its `PROVENANCE.yaml` will be populated as fork requests are made to venues.
 
 ## Relationship to Paper Spec
 
