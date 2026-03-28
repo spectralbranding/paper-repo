@@ -63,7 +63,7 @@ The Paper Spec standard (Zharnikov, 2026t) addresses Gap 5 by defining a machine
 
 **Paper Spec in brief.** The Paper Spec standard (Zharnikov, 2026t) defines a YAML companion file (`paper.yaml`) with five structural elements: (1) typed claims with unique identifiers and dependency links; (2) methodology description with reproducibility requirements; (3) acceptance criteria — what would confirm each claim and, critically, what would falsify it; (4) a dependency graph linking claims to prior work with criticality flags; and (5) submission history tracking venue, decision, and revision scope. The standard is published as an open repository with 20 worked examples from published research (github.com/spectralbranding/paper-spec). The present protocol treats `paper.yaml` as one file in the repository structure; Paper Spec defines its internal schema.
 
-The present protocol is the *process layer* — it specifies how the paper is built, submitted, reviewed, and published. Paper Spec and Paper-as-Repository compose: `paper.yaml` travels with the repository, is versioned alongside the manuscript, and is included in every fork. Together, they make both the content and the lifecycle of a paper fully machine-readable.
+The present protocol is the *process layer* — it specifies how the paper is built, submitted, reviewed, and published. Paper Spec and Research-as-Repository compose: `paper.yaml` travels with the repository, is versioned alongside the manuscript, and is included in every fork. Together, they make both the content and the lifecycle of a paper fully machine-readable.
 
 The Registered Reports format (Chambers, 2013) addresses the sequence problem by splitting peer review into pre-data and post-data stages. The present protocol subsumes Registered Reports as a special case: a Stage 1 submission is a fork at a specific commit; Stage 2 is a subsequent fork from a later commit in the same repository. The fork chain records the two-stage structure automatically.
 
@@ -103,7 +103,7 @@ Lean manufacturing (Ohno, 1988) distinguishes between value-creating activities 
 
 In many disciplines and at many journals, the current system routes the value stream *through* the administrative process. A researcher cannot share a finding with the community without first navigating formatting requirements, submission portals, and editorial management systems that were designed for publisher convenience, not knowledge flow. The administrative burden is not adjacent to the value stream — it is woven into it, forcing every knowledge-creating act to pass through non-value-creating checkpoints.
 
-The Paper-as-Repository protocol restructures this relationship. The value stream flows continuously in the author's repository: writing, analyzing, versioning, collaborating. The administrative functions — submission, blinding, review assignment, publication, indexing — are *services that operate on the repository* rather than *checkpoints the repository must pass through*. A fork is a service call, not a format conversion. Blinding is a function, not a manual task. Publication is a tag, not a production pipeline.
+The Research-as-Repository protocol restructures this relationship. The value stream flows continuously in the author's repository: writing, analyzing, versioning, collaborating. The administrative functions — submission, blinding, review assignment, publication, indexing — are *services that operate on the repository* rather than *checkpoints the repository must pass through*. A fork is a service call, not a format conversion. Blinding is a function, not a manual task. Publication is a tag, not a production pipeline.
 
 This reflects a principle well established in process reengineering (Hammer & Champy, 1993) and Lean thinking (Womack & Jones, 1996): specify the process first, then derive the organizational structure from the process — not the other way around. Organizational Schema Theory (OST) formalizes this principle for organizational design (Zharnikov, 2026i); the present protocol applies it to scholarly communication. Current scientific publishing derives its processes from its organizational structure (journals define formats, timelines, and workflows; researchers conform). The protocol inverts this: the knowledge development process defines the requirements; journals, preprint servers, and review systems are services that fulfill those requirements.
 
@@ -766,7 +766,7 @@ This eliminates:
 
 A critical design constraint: scientists will not entrust their life's work to a centralized platform they do not control. Any protocol that requires a single hosting provider — even a well-intentioned one — replicates the power dynamics of the current publisher oligopoly in a new form.
 
-Git is inherently decentralized. A Git repository is a complete, self-contained history that can be cloned, moved, and operated on without any server. The Paper-as-Repository protocol leverages this property through a three-tier architecture:
+Git is inherently decentralized. A Git repository is a complete, self-contained history that can be cloned, moved, and operated on without any server. The Research-as-Repository protocol leverages this property through a three-tier architecture:
 
 **Tier 1: Local-first authoring.** The author's repository lives on their own machine. All writing, data analysis, and version history happen locally. No internet connection is required for any authoring operation. The author owns their files — not a platform, not an institution, not a publisher. This is how Git already works for software. No new infrastructure is needed.
 
@@ -778,7 +778,7 @@ Multiple remotes are supported natively by Git. An author can push to their univ
 
 Fork-based submission requires that the receiving party (a journal, a preprint server) can verify the provenance chain. This does not require a central registry. It requires a **federation protocol** — a way for independent hosts to exchange provenance metadata.
 
-The model is email (SMTP), not social media (Twitter). Email works because any server can send to any other server using a shared protocol. No central authority controls who can send or receive. The Paper-as-Repository federation protocol works the same way:
+The model is email (SMTP), not social media (Twitter). Email works because any server can send to any other server using a shared protocol. No central authority controls who can send or receive. The Research-as-Repository federation protocol works the same way:
 
 ```
 Author (hosted on University GitLab)
@@ -829,7 +829,7 @@ The preceding sections describe the protocol conceptually — its architecture, 
 
 The normative specification would contain four structural components:
 
-**Message schemas.** Every interaction between protocol participants — fork requests, review responses, editorial decisions, provenance queries, collection acceptance notifications — requires a formally defined message format. These schemas would specify required and optional fields, data types, validation rules, and versioning semantics. The COAR Notify protocol (which defines notifications between repositories and review services) provides a foundation: the Paper-as-Repository protocol can extend COAR Notify's Linked Data Notifications with paper-specific message types (fork-request, review-commit, decision-record, provenance-query).
+**Message schemas.** Every interaction between protocol participants — fork requests, review responses, editorial decisions, provenance queries, collection acceptance notifications — requires a formally defined message format. These schemas would specify required and optional fields, data types, validation rules, and versioning semantics. The COAR Notify protocol (which defines notifications between repositories and review services) provides a foundation: the Research-as-Repository protocol can extend COAR Notify's Linked Data Notifications with paper-specific message types (fork-request, review-commit, decision-record, provenance-query).
 
 **Authentication and signing.** The provenance chain's integrity depends on verified identity. GPG-signed commits — already standard in high-security software development — provide cryptographic proof that a specific person made a specific change at a specific time. The normative specification would define an institutional key infrastructure: universities and publishers maintain signing keys; individual researchers sign with ORCID-linked keys; AI tools sign with tool-specific keys that encode model version and configuration. Signposting (typed HTTP links for scholarly objects) provides the discovery layer: a paper repository's landing page advertises its provenance endpoint, its review branches, and its collection memberships through machine-readable link headers.
 
@@ -1055,7 +1055,7 @@ The protocol's structural advantages — transparency, traceability, machine rea
 
 The structural gap in scientific publishing is not access, timing, or format. It is the document assumption — the treatment of a paper as a static file rather than a living repository with history, contributors, branches, and provenance.
 
-The Paper-as-Repository protocol replaces this assumption with Git-native semantics: papers are repositories, submissions are forks, reviews are attributed commits, and preprint servers are collection users on a shared platform. Every structural problem in the current system — untracked contributions, invisible review labor, unenforceable dual-submission policies, fragmented version histories, and opaque editorial decisions — becomes structurally addressable in principle when the paper is a repository rather than a document.
+The Research-as-Repository protocol replaces this assumption with Git-native semantics: papers are repositories, submissions are forks, reviews are attributed commits, and preprint servers are collection users on a shared platform. Every structural problem in the current system — untracked contributions, invisible review labor, unenforceable dual-submission policies, fragmented version histories, and opaque editorial decisions — becomes structurally addressable in principle when the paper is a repository rather than a document.
 
 The protocol does not require new science. It requires applying to scientific publishing the same version-control infrastructure that software engineering adopted two decades ago. The tools exist. The semantics exist. The missing piece is the specification layer — the protocol that maps academic publishing workflows onto repository operations.
 
@@ -1087,11 +1087,19 @@ Auer, S., Kovtun, V., Prinz, M., Kasprzik, A., Stocker, M., & Vidal, M. E. (2019
 
 Clark, T., Ciccarese, P. N., & Goble, C. A. (2014). Micropublications: A semantic model for claims, evidence, arguments and annotations in biomedical communications. *Journal of Biomedical Semantics*, 5(28). https://doi.org/10.1186/2041-1480-5-28
 
+COAR Notify. (2023). COAR Notify Protocol: Linked data notifications for scholarly communication. https://notify.coar-repositories.org/
+
+DataCite. (2024). DataCite Metadata Schema. https://schema.datacite.org/
+
 Eisen, M. B., Akhmanova, A., Behrens, T. E., et al. (2022). Implementing a "Publish, then Review" model of publishing. *eLife*, 11, e64910. https://doi.org/10.7554/eLife.64910
+
+Freeman, A. (2021). Octopus: A new approach to scientific publishing. https://www.octopus.ac/
 
 Di Cosmo, R., & Zacchiroli, S. (2019). Software Heritage: Why and How to Preserve Software Source Code. arXiv:1909.10760.
 
 Gipp, B., Meuschke, N., & Gernandt, A. (2017). Decentralized Trusted Timestamping using the Crypto Currency Bitcoin. *Proceedings of the ACM/IEEE Joint Conference on Digital Libraries (JCDL)*.
+
+GitHub. (2008). GitHub: Social coding platform. https://github.com/
 
 Groth, P., Gibson, A., & Velterop, J. (2010). The Anatomy of a Nanopublication. *Information Services & Use*, 30(1-2), 51-56.
 
@@ -1119,9 +1127,13 @@ Robinson, D. C., Hand, J. A., Madsen, M. B., & McKelvey, K. R. (2018). The Dat P
 
 Ross-Hellauer, T. (2017). What is open peer review? A systematic review. *F1000Research*, 6, 588. https://doi.org/10.12688/f1000research.11369.2
 
+Signposting. (2022). Signposting the Scholarly Web. https://signposting.org/
+
 Tennant, J. P., Dugan, J. M., Graziotin, D., et al. (2017). A multi-disciplinary perspective on emergent and future innovations in peer review. *F1000Research*, 6, 1151.
 
 Smith, A. M., Katz, D. S., & Niemeyer, K. E. (2016). Software citation principles. *PeerJ Computer Science*, 2, e86. https://doi.org/10.7717/peerj-cs.86
+
+PubPub. (2017). PubPub: Open publishing platform. MIT Knowledge Futures Group. https://www.pubpub.org/
 
 Soiland-Reyes, S., Sefton, P., Crosas, M., et al. (2022). Packaging research artefacts with RO-Crate. *Data Science*, 5(1), 97-138. https://doi.org/10.3233/DS-210053
 
