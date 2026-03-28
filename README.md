@@ -4,6 +4,17 @@ A research program is not a sequence of documents. It is a repository.
 
 **Paper Repo** defines a protocol for managing scientific research as version-controlled repositories — where papers are tagged releases forked to journals for community review, with automated compliance gates, attributed reviewer commits, and provenance chains that make the full research lifecycle machine-readable.
 
+## Core Concept
+
+| Level | Meaning |
+|---|---|
+| **Research program** | Repository — the single source of truth, evolving over time |
+| **Paper** | Render of the research at a point on its timeline — a frozen snapshot, a communication event |
+| **Fork** | Sharing that render with a journal for confirmation |
+| **Publication** | Merge — the community's confirmation that the findings join the shared knowledge base |
+
+This maps onto the same rendering problem pattern that appears across domains: a specification is rendered into an expression, which is then evaluated by observers. In SBT: brand specification → signals → perception cloud. In OST: organizational schema → operations → performance metrics. In Paper Repo: research repository → paper → community evaluation (peer review). Same structure, different substrates.
+
 ## The Problem
 
 Scientific publishing routes knowledge production through administrative checkpoints: formatting manuscripts, uploading to portals, manually blinding, re-reviewing papers rejected elsewhere. These activities consume editorial and author labor without creating knowledge.
