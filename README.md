@@ -58,7 +58,7 @@ See [Paper Spec](https://github.com/spectralbranding/paper-spec) for the `paper.
 ### Validate a paper against a journal spec
 
 ```bash
-python scripts/validate_paper.py --repo /path/to/paper --spec examples/journal_spec_jm.yaml
+python scripts/validate_paper.py --repo /path/to/paper --spec examples/journal-specs/journal_spec_jm.yaml
 ```
 
 Output:
@@ -97,10 +97,9 @@ cp /path/to/paper-repo/templates/* .
 
 | Example | What it demonstrates |
 |---|---|
-| [`examples/journal_spec_jm.yaml`](examples/journal_spec_jm.yaml) | Real Journal of Marketing spec from actual submission |
-| [`examples/R13_CONTRIBUTORS.yaml`](examples/R13_CONTRIBUTORS.yaml) | Contributor attribution from a real paper |
-| [`examples/R13_PROVENANCE.yaml`](examples/R13_PROVENANCE.yaml) | Fork history: Zenodo preprint + QSS submission |
-| [`examples/R14/`](examples/R14/) | **This protocol's own paper** — self-referential implementation |
+| [`examples/journal-specs/`](examples/journal-specs/) | Journal submission specs (machine-readable requirements) |
+| [`examples/R13/`](examples/R13/) | Paper Spec paper — contributor attribution + fork history (Zenodo + QSS) |
+| [`examples/R14/`](examples/R14/) | **This protocol's own paper** — full self-referential implementation (paper.md + paper.yaml + all artifacts) |
 
 ## AI Traceability by Design
 
