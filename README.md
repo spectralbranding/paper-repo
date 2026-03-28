@@ -1,8 +1,8 @@
 # Paper Repo: A Git-Native Protocol for Scientific Publishing
 
-A paper is not a document. It is a repository.
+A research program is not a sequence of documents. It is a repository.
 
-**Paper Repo** defines a protocol for managing scientific papers as version-controlled repositories — with fork-based submission, automated compliance gates, attributed reviewer commits, and provenance chains that make the full research lifecycle machine-readable.
+**Paper Repo** defines a protocol for managing scientific research as version-controlled repositories — where papers are tagged releases forked to journals for community review, with automated compliance gates, attributed reviewer commits, and provenance chains that make the full research lifecycle machine-readable.
 
 ## The Problem
 
@@ -14,7 +14,7 @@ The root cause: the system treats a paper as a static document (a PDF) rather th
 
 | Feature | What it does |
 |---|---|
-| **Paper repository** | Every paper is a Git repo with structured metadata (paper.yaml, CONTRIBUTORS.yaml, PROVENANCE.yaml) |
+| **Research repository** | Every research program is a Git repo; papers are tagged releases with structured metadata (paper.yaml, CONTRIBUTORS.yaml, PROVENANCE.yaml) |
 | **Fork-based submission** | A fork request to a journal creates a frozen, cryptographically linked fork |
 | **Compliance gate** | Journal publishes `journal_spec.yaml`; validator checks compliance before fork request is processed |
 | **Blinding as function** | Reviewer anonymization is automated per journal config, not manual |
