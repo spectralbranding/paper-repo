@@ -8,9 +8,9 @@ Working Paper — March 2026
 
 ## Abstract
 
-Scientific papers are written, submitted, reviewed, revised, and published through a pipeline that has no specification, no version control, no contributor traceability, and no machine-readable provenance. This paper proposes a conceptual protocol that treats every research program as a version-controlled repository — the single source of truth for its content, contributor history, and evaluation lifecycle. A paper is a render of the research at a given point on its progress timeline: a frozen snapshot forked to a journal so the scientific community can confirm the findings and build on them. The protocol introduces four structural innovations: (1) fork-based submission, where submitting to a journal creates a cryptographically linked frozen snapshot that the editor owns and the author cannot modify; (2) blinding-as-function, where anonymization is a configurable system property rather than a manual author action; (3) provenance-by-design, where every fork is permanently recorded in the author's repository and visible to subsequent forks; and (4) collections-as-users, where preprint servers, journals, and archives are registered users on a shared platform who accept frozen forks into curated collections. The protocol makes the full research lifecycle — from first draft through peer review through publication — machine-readable, contributor-traceable, and structurally transparent. Combined with the Paper Spec standard (Zharnikov, 2026t), which specifies what a paper claims, the repository protocol specifies how the paper was built, evaluated, and decided upon. Together, they make the research pipeline auditable by both humans and machines.
+Scientific evaluation relies on a self-reinforcing loop: universities evaluate researchers by journal prestige, journals evaluate papers partly by institutional affiliation, and no one evaluates the research directly — because direct evaluation at scale has lacked the necessary infrastructure. This paper proposes a protocol that provides that infrastructure by treating every research program as a version-controlled repository. A paper is a render of the research at a point on its timeline: a frozen snapshot forked to a journal so the community can confirm the findings. The protocol introduces fork-based submission, automated compliance gates, attributed reviewer commits, provenance chains, structural funding and affiliation metadata, and AI-traceability by design — every AI-assisted edit becomes a commit with auditable metadata. The protocol optimizes the knowledge production process, not the paper: existing publishing reforms improve the rendered artifact; this protocol makes the research itself structurally transparent. Universities can evaluate researchers on contribution depth and review quality instead of journal brands. Funders can trace grants to specific commits. Reviewers build portable, credited portfolios. Junior researchers gain visibility from their first commit. Combined with the Paper Spec standard (Zharnikov, 2026t), which specifies what a paper claims, the repository protocol specifies how the research was built, evaluated, and decided upon.
 
-**Keywords**: scientific publishing, version control, peer review, research infrastructure, open science, provenance, specification
+**Keywords**: scientific publishing, version control, peer review, research infrastructure, open science, provenance, knowledge production, research evaluation, AI transparency
 
 ---
 
@@ -20,7 +20,7 @@ Scientific papers are written, submitted, reviewed, revised, and published throu
 
 The global scientific publishing system processes approximately 3 million papers per year (UNESCO, 2021) through a pipeline built on a single assumption: a paper is a document. A PDF file. A static artifact transmitted from author to editor to reviewer to publisher. Every tool in the pipeline — manuscript submission portals, editorial management systems, reviewer interfaces, typesetting workflows — treats the paper as an opaque binary object that moves between mailboxes.
 
-This assumption was adequate when papers were physically printed and mailed. It is now the binding constraint on every reform the scientific community has attempted in the past two decades.
+This assumption was adequate when papers were physically printed and mailed. It is now a significant structural constraint on every reform the scientific community has attempted in the past two decades.
 
 Open access reforms — accelerated by mandates such as Plan S (cOAlition S, 2018) — change *who can read* the document. They do not change the document. Preprint servers change *when* the document becomes available. They do not change its structure. Registered reports change *what sequence* the document follows. They do not change how it is tracked. Post-publication review adds commentary *about* the document. It does not integrate with the document's own history.
 
@@ -397,6 +397,31 @@ ScholarOne / Editorial Manager / OJS
     |   Transitional: editor receives a rendered document without
     |     structural metadata or provenance
 ```
+
+**Figure 1. Architecture of the fork-based submission lifecycle.**
+
+```
+Research Repository (author)
+    |
+    |-- fork request -->  Journal Fork (frozen)
+    |                        |
+    |                        |-- review branch (Reviewer 1)
+    |                        |-- review branch (Reviewer 2)
+    |                        |
+    |                        |-- editorial decision
+    |                        |       |
+    |                  [merge into collection] or [close fork]
+    |
+    |-- fork request -->  Preprint Collection (Zenodo)
+    |                        |
+    |                  [merged -- DOI minted]
+    |
+    |-- continue working on main branch
+    |
+    |-- tag: paper-02 (next paper)
+```
+
+The research repository is the SSOT; forks are frozen snapshots owned by the receiving venue. Review branches are attributed to individual reviewers. The editorial decision either merges the fork into the journal's collection or closes it.
 
 This hybrid approach has three adoption advantages. First, it piggybacks on existing OAuth infrastructure (if ScholarOne can link an ORCID, it can link a GitHub account). Second, the transitional pathway means no journal is forced to adopt the protocol immediately — but the structural advantages of the git-native flow (provenance, compliance automation, contributor traceability) create migration pressure over time. Third, the git-native flow gives editors capabilities the traditional flow cannot: version history, contributor verification, and structured review branches. These advantages, not mandates, drive the transition.
 
@@ -1030,6 +1055,8 @@ The protocol does not solve the pipeline problem. But it provides the infrastruc
 
 ### 4.10 Stakeholder Summary
 
+**Table 2. Stakeholder benefit summary.**
+
 | Stakeholder | Current pain | Protocol benefit |
 |-------------|-------------|-----------------|
 | Authors | Formatting waste, opaque decisions, AI disclosure guilt | Own their research. Full contribution credit. AI transparent by design. |
@@ -1049,7 +1076,7 @@ The protocol does not solve the pipeline problem. But it provides the infrastruc
 
 The protocol's compliance gate has been prototyped. A reference validator (`validate_paper.py`, 290 lines of Python) checks a paper repository against a `journal_spec.yaml` file, validating word count, abstract length, keyword range, reference count, self-citation ratio, figure formats, and required statements (AI disclosure, data availability, funding, conflict of interest). The validator runs locally in under one second and produces a pass/fail report with specific failure messages.
 
-A worked example demonstrates feasibility: the Journal of Marketing's submission requirements have been encoded as `journal_spec_jm.yaml` (130 fields covering manuscript format, blinding rules, figure specifications, math notation rules, and 46 compliance checks derived from actual JM submission guidelines). Running the validator against a paper repository produces output such as:
+A worked example demonstrates feasibility: the Journal of Marketing's submission requirements have been encoded as `journal_spec_jm.yaml` (130 fields covering manuscript format, blinding rules, figure specifications, math notation rules, and 46 compliance checks derived from actual JM submission guidelines). The following output is a demonstration of the validator against a hypothetical paper repository — not this paper's own validation results:
 
 ```
 Validating against: Journal of Marketing
@@ -1066,6 +1093,8 @@ Repository: /path/to/paper
 Results: 6 passed, 1 failed, 0 warnings
 Submission gate: BLOCKED — fix failures before submitting
 ```
+
+The example illustrates that the validator catches a specific compliance failure (self-citation ratio exceeding the journal's threshold) with an actionable diagnostic. The present paper's own self-citation ratio is 5.7% (2 of 35 references).
 
 The author sees the exact failure (self-citation ratio), fixes it in their repository, and re-runs the validator. The entire cycle takes minutes, not the weeks currently consumed by desk-rejection-and-resubmission rounds.
 
@@ -1105,7 +1134,7 @@ These metrics are evaluation criteria for future pilots, not claims of achieved 
 
 6. **Legacy corpus.** The existing body of 50+ million published papers has no repository structure. Retroactive conversion is impractical. The protocol applies to new papers going forward; legacy papers remain in their current form.
 
-7. **Governance.** The protocol is designed as a federated network (Section 2.10), not a centralized platform. Like email, any institution can run its own server. The governance question reduces to: who maintains the protocol specification? Existing models (IETF for internet protocols, W3C for web standards, NISO for information standards) provide precedents. The protocol specification itself can be versioned in a Git repository.
+7. **Governance.** The protocol is designed as a federated network (Section 2.10), not a centralized platform. Like email, any institution can run its own server. The governance question reduces to: who maintains the protocol specification? Existing models (IETF for internet protocols, W3C for web standards, NISO for information standards) provide precedents. The protocol specification could be maintained as an Internet-Draft, with community review periods and versioned releases following RFC conventions. The protocol specification itself can be versioned in a Git repository. Reference implementations should be host-agnostic: Gitea and Forgejo provide self-hosted alternatives to GitHub and GitLab, ensuring that no single commercial platform becomes a dependency. Git's distributed architecture inherently supports offline work — a researcher can commit locally with no network connectivity, and synchronization happens when connectivity returns — which makes the protocol viable in low-bandwidth and intermittent-connectivity environments without requiring any centralized infrastructure to be always available.
 
 8. **Intellectual property.** When an editor owns a fork and reviewers commit to it, the ownership of review content is unclear under current copyright law. The protocol should specify that review commits are licensed under a standard open license (e.g., CC-BY) at creation time.
 
@@ -1145,15 +1174,17 @@ The protocol's structural advantages — transparency, traceability, machine rea
 
 ## 6. Conclusion
 
-The structural gap in scientific publishing is not access, timing, or format. It is the document assumption — the treatment of a paper as a static file rather than a living repository with history, contributors, branches, and provenance.
+The structural gap in scientific publishing is not access, timing, or format. It is the document assumption — the treatment of a paper as a static file rather than a living repository with history, contributors, branches, and provenance. But the deeper gap is evaluative: the scientific community cannot evaluate research directly at scale, so it relies on journal prestige as a proxy — creating a loop that rewards publication venue over contribution quality.
 
-The Research-as-Repository protocol replaces this assumption with Git-native semantics: papers are repositories, submissions are forks, reviews are attributed commits, and preprint servers are collection users on a shared platform. Every structural problem in the current system — untracked contributions, invisible review labor, unenforceable dual-submission policies, fragmented version histories, and opaque editorial decisions — becomes structurally addressable in principle when the paper is a repository rather than a document.
+The Research-as-Repository protocol addresses both gaps. It replaces the document assumption with Git-native semantics: research programs are repositories, papers are renders, submissions are forks, reviews are attributed commits, and journals are collection curators. It breaks the prestige loop by making research contribution structurally evaluable — contribution depth, review quality, collaboration patterns, and research trajectory become queryable data, available to hiring committees, funders, and the public without relying on journal brands as shortcuts.
 
-The protocol does not require new science. It requires applying to scientific publishing the same version-control infrastructure that software engineering adopted two decades ago. The tools exist. The semantics exist. The missing piece is the specification layer — the protocol that maps academic publishing workflows onto repository operations.
+The protocol optimizes the knowledge production process, not the paper. Existing publishing reforms — open access, preprints, registered reports — improve the rendered artifact. This protocol makes the research itself transparent: every commit attributed, every AI contribution auditable, every grant traceable to specific results, every affiliation verified by the infrastructure rather than declared on a form.
 
-The conceptual payoff extends beyond publishing infrastructure. The four-level hierarchy — research program as repository, paper as render, submission as fork, publication as merge — reveals that scientific publishing is an instance of a general specification-implementation-perception pipeline (Section 3.4). A specification (the research) is rendered into an implementation (the paper) that produces observer-dependent perception (peer review). The rendering is lossy. The perception varies by observer. This is the same structural pattern that appears in branding (where a brand specification is rendered into signals that produce observer-dependent perception) and in organizational design (where a schema is rendered into operations that produce variable performance). The protocol proposed here does not merely fix a broken pipeline — it makes the pipeline's structure visible, auditable, and formally describable for the first time.
+The four-level hierarchy — research program as repository, paper as render, fork as sharing, publication as merge — reveals that scientific publishing is an instance of a general specification-implementation-perception pipeline (Section 3.4). The same pattern appears in branding and organizational design. The protocol makes this pipeline's structure visible, auditable, and formally describable.
 
-This paper proposes the conceptual architecture for that specification. A formal, implementable standard — with normative message schemas, authentication flows, and error handling — is the necessary next step.
+Every stakeholder gains: authors own their research; reviewers build portable portfolios; editors get auditable workflows; universities can evaluate researchers directly; funders trace ROI at commit granularity; junior researchers gain visibility from day one; society gets transparent, auditable science. The protocol does not replace prestige. It replaces the need for prestige as a proxy.
+
+This paper proposes the conceptual architecture. A formal, implementable standard — with normative message schemas, authentication flows, and error handling — is the necessary next step. The compliance gate, schemas, and self-referential implementation are available at github.com/spectralbranding/paper-repo.
 
 ---
 
