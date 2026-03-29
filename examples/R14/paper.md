@@ -250,8 +250,10 @@ research-program/
   shared/
     data/                 # Shared data and analysis
     figures/              # Shared figures
-  CONTRIBUTORS.yaml       # All contributors across the program
-  PROVENANCE.yaml         # All forks (one per paper per venue)
+  CONTRIBUTORS.yaml       # Links to researcher profiles
+  FUNDING.yaml            # Grant timeline scoped to commits
+  ACKNOWLEDGMENTS.md      # Version-controlled
+  PROVENANCE.yaml         # Fork history (one per paper per venue)
   LICENSE
 ```
 
@@ -762,7 +764,48 @@ This eliminates:
 - **Version fragmentation**: the author's repo is the SSOT; every collection holds a linked snapshot
 - **Access barriers**: arXiv endorsement, SSRN account approval, journal submission portals — all replaced by fork requests that carry verifiable provenance
 
-### 2.9 Federation and Local Sovereignty
+### 2.9 Funding, Affiliations, and Provenance Metadata
+
+Three categories of metadata shape how a paper is credited, acknowledged, and governed — and the current system conflates all three into free-text fields on a submission form. The repository protocol separates them structurally: affiliations belong to the *person*, funding belongs to the *project*, and authorship records belong to the *paper*. Each has its own lifecycle, its own source of truth, and its own verification mechanism.
+
+**Funding as structural metadata.** A research program accumulates funding over time — grants begin and end, overlap, and attach to different stages of the work. `FUNDING.yaml` records this timeline, with each grant entry scoped to a commit range or set of tagged paper releases:
+
+```yaml
+funding:
+  - funder: "National Science Foundation"
+    funder_id: "https://ror.org/021nxhr62"
+    grant_id: "NSF-2025-001"
+    period: "2025-01 / 2026-06"
+    scope_papers: ["paper-01", "paper-02"]
+    conditions:
+      open_access: required
+      data_sharing: required
+    verified: true
+
+  - funder: null
+    period: "2024-01 / 2024-12"
+    note: "Self-funded initial exploration"
+```
+
+Funders are read-only watchers of the repository, not owners. The researcher always owns the repo. When a paper is forked to a journal, the compliance gate resolves which funding entries cover the commits in that fork and generates acknowledgment text automatically — a funder whose grant covers those commits cannot be accidentally omitted. Funder conditions (open access mandates, data sharing requirements) are fields in `FUNDING.yaml` that the gate enforces against `journal_spec.yaml`. Plan S compliance becomes a YAML field checked at fork time, not a policy document the author must remember to consult. When funding ends, the entry receives a `period_end` date; the research continues; the funder's watch access expires. Unfunded periods are explicitly recorded (`funder: null`), making the funding timeline complete rather than leaving gaps that invite ambiguity.
+
+**Affiliations as researcher profile.** Affiliations change independently of any research project — a contributor moves from MIT to Stanford mid-project, or holds joint appointments at two institutions. The current system asks the author to enter their affiliation on a submission form, creating a snapshot that may be wrong by the time the paper is published. The repository protocol separates affiliation from the research repo entirely. Each researcher maintains a personal profile — a Git-native timeline of institutional affiliations, analogous to ORCID but versioned and cryptographically signed:
+
+```yaml
+affiliations:
+  - institution: "Massachusetts Institute of Technology"
+    ror: "https://ror.org/042nb2s44"
+    period: "2022-09 / 2025-08"
+  - institution: "Stanford University"
+    ror: "https://ror.org/00f54p054"
+    period: "2025-09 / present"
+```
+
+`CONTRIBUTORS.yaml` in the research repository links to each contributor's profile rather than duplicating affiliation data. When a paper is forked, the system resolves: "at the time of the commits in this fork, what was this contributor's affiliation?" The answer comes from the researcher's profile timeline intersected with the commit timestamps — not from a form field. This eliminates the "affiliation at time of research vs. affiliation at time of publication" footnote problem that currently requires manual disambiguation. Verification is structural: a commit signed from an `@mit.edu` email domain corroborates an MIT affiliation entry, and an institution can optionally GPG-sign the profile entry to confirm the appointment.
+
+The three-level separation — affiliations (person), funding (project), authorship (paper) — means each can be updated independently without touching the others, and each is verified against its own source of truth rather than self-reported on a form.
+
+### 2.10 Federation and Local Sovereignty
 
 A critical design constraint: scientists will not entrust their life's work to a centralized platform they do not control. Any protocol that requires a single hosting provider — even a well-intentioned one — replicates the power dynamics of the current publisher oligopoly in a new form.
 
@@ -807,7 +850,7 @@ Each participant runs their own infrastructure. The protocol specifies the messa
 
 Tier 1 is useful immediately, alone, with no institutional adoption. This is critical: the protocol must deliver value to a single researcher on their laptop before it delivers value to the system.
 
-### 2.10 The AI-Native Layer
+### 2.11 The AI-Native Layer
 
 When every paper is a repository with structured metadata (`paper.yaml`), machine-readable content (Markdown), and auditable provenance (`PROVENANCE.yaml`), the entire corpus becomes queryable:
 
@@ -823,7 +866,7 @@ When every paper is a repository with structured metadata (`paper.yaml`), machin
 
 **AI contribution traceability**: Git does not just track the researcher's work. It tracks their AI's work too. Every AI-assisted edit becomes a commit with structured metadata: the tool used, the model version, and a hash of the prompt that generated the output. This makes AI contribution structurally transparent and auditable — not as a self-reported disclosure statement, but as a verifiable chain of operations embedded in the repository's history. The AI disclosure problem that journals are currently struggling to solve through policy becomes an engineering problem with an engineering solution: the commit log.
 
-### 2.11 Toward a Normative Specification
+### 2.12 Toward a Normative Specification
 
 The preceding sections describe the protocol conceptually — its architecture, its components, and their interactions. A production-grade implementation requires a normative specification: a formal, unambiguous document that defines message formats, authentication flows, error handling, and API contracts with sufficient precision that independent implementers can build interoperable systems.
 
@@ -835,7 +878,7 @@ The normative specification would contain four structural components:
 
 **Error handling.** Production systems fail. The specification must define behavior for validation failures (which checks are blocking vs. advisory, how failures are reported, what retry semantics apply), conflict resolution (what happens when two forks target the same journal simultaneously, how merge conflicts in review branches are resolved), and timeout policies (how long a fork remains active before automatic expiration, what happens to review branches when a reviewer becomes unresponsive).
 
-**API endpoints.** The federation protocol (Section 2.9) requires a defined interface — whether REST endpoints, protocol-level messages, or both — through which independent hosts exchange provenance metadata, fork requests, and decision records. DataCite's REST API for DOI minting and metadata retrieval provides a model for the provenance query interface. ORCID's OAuth-based identity verification provides a model for the authentication flow.
+**API endpoints.** The federation protocol (Section 2.10) requires a defined interface — whether REST endpoints, protocol-level messages, or both — through which independent hosts exchange provenance metadata, fork requests, and decision records. DataCite's REST API for DOI minting and metadata retrieval provides a model for the provenance query interface. ORCID's OAuth-based identity verification provides a model for the authentication flow.
 
 The normative specification is future work. It requires multi-stakeholder input from publishers (who must implement fork acceptance and review branch management), libraries (who must implement collection curation and long-term preservation), platform providers (who must implement the federation protocol), and researchers (who must validate that the specification serves their workflows without imposing unreasonable burden). The governance model — whether the specification is maintained by an existing standards body (NISO, W3C, IETF) or a new consortium — is itself a design decision that affects adoption. The conceptual architecture in this paper is the necessary prerequisite: one must know what the protocol does before specifying how it does it.
 
@@ -949,7 +992,7 @@ This does not fully solve the AI transparency problem — an author can still co
 
 ### 4.5 For the System
 
-The cumulative effect is that scientific publishing becomes a transparent, auditable, machine-readable graph of knowledge production. The Matthew Effect — where early prestige compounds into career advantage through mechanisms invisible to evaluation systems — becomes structurally traceable. The specification gap in peer review (Zharnikov, 2026t) becomes closeable.
+The cumulative effect is that scientific publishing becomes a transparent, auditable, machine-readable graph of knowledge production. The Matthew Effect — where early prestige compounds into career advantage through mechanisms invisible to evaluation systems — becomes structurally traceable. The specification gap in peer review (Zharnikov, 2026t) becomes closeable. Funding compliance — Plan S open-access mandates, funder data-sharing requirements — becomes structural: checked by the compliance gate against `FUNDING.yaml` conditions at fork time, not declared on a form and hoped for.
 
 ---
 
@@ -997,7 +1040,7 @@ The protocol's seven claims (Section 1) are conceptual propositions, not empiric
 
 **Dual submission detection.** The provenance chain (Section 2.7) makes concurrent submissions structurally detectable within the protocol. Target: 100% structural detection of concurrent identical submissions to journals that participate in the federation protocol. Measurement: false negative rate (submissions that evade detection) and false positive rate (legitimate parallel submissions, e.g., to a preprint server and a journal, incorrectly flagged).
 
-**AI contribution traceability.** The AI-native layer (Section 2.10) records AI-assisted edits as attributed commits. Target: every AI-assisted edit attributed in commit history with tool name, model version, and prompt hash. Measurement: percentage of AI-assisted edits that carry complete attribution metadata in pilot repositories; comparison of declared AI involvement versus commit-log evidence.
+**AI contribution traceability.** The AI-native layer (Section 2.11) records AI-assisted edits as attributed commits. Target: every AI-assisted edit attributed in commit history with tool name, model version, and prompt hash. Measurement: percentage of AI-assisted edits that carry complete attribution metadata in pilot repositories; comparison of declared AI involvement versus commit-log evidence.
 
 These metrics are evaluation criteria for future pilots, not claims of achieved performance. The protocol is conceptual; the metrics define what a successful implementation would demonstrate.
 
@@ -1007,7 +1050,7 @@ These metrics are evaluation criteria for future pilots, not claims of achieved 
 
 2. **Partial prototype only.** The compliance gate layer has been prototyped: a public repository (github.com/spectralbranding/paper-repo) contains the validator, schemas, journal specification examples, and a self-referential implementation of this paper as a compliant paper repository. However, the full fork-and-review lifecycle — fork creation, blinding function, reviewer branch management, provenance chain propagation, and collections-as-users federation — remains a conceptual architecture without implementation. A proof-of-concept implementing these components for a single journal or preprint server is the necessary validation step. The most realistic first adopter is likely a preprint server (which already accepts structured deposits) or an overlay journal (which already curates externally hosted papers), not a traditional publisher whose business model depends on controlling the manuscript pipeline.
 
-3. **Git literacy.** The majority of researchers outside computer science and engineering have never used Git. Humanities, social sciences, and many natural science fields work primarily in Word processors. The protocol requires a GUI abstraction layer — a "GitHub Desktop for papers" — that presents repository operations (commit, fork, branch) through familiar editing metaphors. Without this, adoption is limited to computationally literate disciplines. The three-tier architecture (Section 2.9) mitigates this: Tier 1 (local Git) benefits only those who already use version control; the full protocol benefits only materialize at Tier 3, which requires broader tool development.
+3. **Git literacy.** The majority of researchers outside computer science and engineering have never used Git. Humanities, social sciences, and many natural science fields work primarily in Word processors. The protocol requires a GUI abstraction layer — a "GitHub Desktop for papers" — that presents repository operations (commit, fork, branch) through familiar editing metaphors. Without this, adoption is limited to computationally literate disciplines. The three-tier architecture (Section 2.10) mitigates this: Tier 1 (local Git) benefits only those who already use version control; the full protocol benefits only materialize at Tier 3, which requires broader tool development.
 
 4. **Gaming.** Commit histories can be manufactured. A contributor could inflate their commit count through trivial changes. Mitigation: review branches are created by editors, not authors; and contribution metrics should weight substance (lines changed in methods section) over quantity (total commits).
 
@@ -1015,7 +1058,7 @@ These metrics are evaluation criteria for future pilots, not claims of achieved 
 
 6. **Legacy corpus.** The existing body of 50+ million published papers has no repository structure. Retroactive conversion is impractical. The protocol applies to new papers going forward; legacy papers remain in their current form.
 
-7. **Governance.** The protocol is designed as a federated network (Section 2.9), not a centralized platform. Like email, any institution can run its own server. The governance question reduces to: who maintains the protocol specification? Existing models (IETF for internet protocols, W3C for web standards, NISO for information standards) provide precedents. The protocol specification itself can be versioned in a Git repository.
+7. **Governance.** The protocol is designed as a federated network (Section 2.10), not a centralized platform. Like email, any institution can run its own server. The governance question reduces to: who maintains the protocol specification? Existing models (IETF for internet protocols, W3C for web standards, NISO for information standards) provide precedents. The protocol specification itself can be versioned in a Git repository.
 
 8. **Intellectual property.** When an editor owns a fork and reviewers commit to it, the ownership of review content is unclear under current copyright law. The protocol should specify that review commits are licensed under a standard open license (e.g., CC-BY) at creation time.
 
@@ -1037,7 +1080,7 @@ These metrics are evaluation criteria for future pilots, not claims of achieved 
 
 The protocol's structural advantages — transparency, traceability, machine readability — carry risks that must be addressed explicitly rather than discovered through adoption.
 
-**Platform dependence.** The protocol is Git-native but must not entrench the dominance of any specific hosting platform. GitHub's current market position makes it the path of least resistance for implementation, but a protocol that requires GitHub replicates the power asymmetry it aims to dissolve — trading publisher lock-in for platform lock-in. The federation architecture (Section 2.9) mitigates this structurally: any Git-compatible host can participate. However, institutional hosting capacity varies enormously. A well-funded research university can run its own Gitea instance; a university in the Global South may lack the systems administration staff to do so. The protocol specification must remain host-agnostic, and reference implementations must be tested on self-hosted infrastructure, not only on commercial platforms.
+**Platform dependence.** The protocol is Git-native but must not entrench the dominance of any specific hosting platform. GitHub's current market position makes it the path of least resistance for implementation, but a protocol that requires GitHub replicates the power asymmetry it aims to dissolve — trading publisher lock-in for platform lock-in. The federation architecture (Section 2.10) mitigates this structurally: any Git-compatible host can participate. However, institutional hosting capacity varies enormously. A well-funded research university can run its own Gitea instance; a university in the Global South may lack the systems administration staff to do so. The protocol specification must remain host-agnostic, and reference implementations must be tested on self-hosted infrastructure, not only on commercial platforms.
 
 **Accessibility.** Git's command-line interface is inaccessible to many researchers — not only those unfamiliar with version control but also those with visual, motor, or cognitive disabilities for whom terminal interaction presents barriers. The GUI abstraction layer noted in Limitation 3 is not merely a convenience; it is an accessibility requirement. Any reference implementation must meet WCAG 2.1 AA standards. Screen reader compatibility, keyboard navigation, and high-contrast modes are not optional features — they are prerequisites for equitable adoption.
 
@@ -1046,6 +1089,8 @@ The protocol's structural advantages — transparency, traceability, machine rea
 **Labor implications.** Reviewer attribution is a corrective to the current invisibility of review labor. But making review depth measurable creates a new risk: the metrics could become targets. If hiring committees begin evaluating candidates on review portfolio depth, the protocol inadvertently creates pressure for unsustainable overwork — reviewers investing more hours per review to build visible records. The framing matters: reviewer attribution should recognize *existing* labor that currently goes uncredited, not demand *additional* labor. Aggregate metrics (total reviews, journal breadth) are safer signals than per-review depth metrics, which could incentivize quantity over judgment.
 
 **Legal and intellectual property.** Reviewer commits on journal forks constitute intellectual contributions — structured, attributed, and timestamped. Their copyright status under current law is ambiguous: is a review comment a work-for-hire (if the reviewer is compensated), a voluntary contribution (if unpaid), or a derivative work (if it modifies the manuscript text)? The protocol should require that all review commits be licensed CC-BY-4.0 at the point of reviewer invitation, before any review work begins. This parallels the copyright transfer agreements authors currently sign at submission — extending the same contractual clarity to reviewers.
+
+**Patent-bound and pre-disclosure research.** Some research is aimed at patents and must remain private until intellectual property is filed. Git handles this natively: private repositories with access control. `PROVENANCE.yaml` can carry a `visibility` field (`public` or `private_until: [date]`) that the compliance gate enforces — blocking fork requests to public venues while the visibility constraint is active. Once the patent is filed, the repository goes public. The full commit history then proves priority, prior art, and inventorship timeline with cryptographic certainty — stronger IP protection than any paper notebook. The protocol does not require openness; it requires *structural readiness* for openness, activated when the researcher decides the time is right.
 
 **Privacy and the irrevocable record.** The provenance chain is append-only by design — this is what makes it trustworthy. But irrevocability means that submission history, rejection patterns, and review timelines are permanently recorded. A researcher who submits to ten journals before acceptance has a visible record of nine rejections (or at minimum, nine prior forks). The protocol's current design makes fork *existence* always visible while keeping *decisions* optionally visible (Section 5.3, Limitation 5). The appropriate default — how much provenance is visible to whom — should be community-configured and may vary by discipline. Clinical research, where transparency serves patient safety, may require fuller disclosure than humanities, where submission patterns carry different professional implications.
 
