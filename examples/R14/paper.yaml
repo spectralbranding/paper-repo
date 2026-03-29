@@ -13,15 +13,20 @@ metadata:
       affiliation: "Independent Researcher"
       corresponding: true
   citation_key: "2026u"
+  doi: "10.5281/zenodo.19294864"
   date: "2026-03-28"
-  version: "0.4.0"
+  version: "1.0"
   status: working_paper
+  license: "CC-BY-NC-ND-4.0"
   keywords:
     - scientific publishing
     - version control
     - peer review
     - research infrastructure
     - open science
+    - knowledge production
+    - research evaluation
+    - prestige loop
     - provenance
 
 claims:
