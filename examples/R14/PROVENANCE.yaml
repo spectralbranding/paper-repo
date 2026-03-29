@@ -7,20 +7,14 @@ provenance:
   citation_key: "2026u"
   repository: "spectral-branding/research/R14_paper_as_repository.md"
 
-  forks: []
-  # No forks yet — this will be populated when:
-  # 1. The paper is uploaded to Zenodo (fork to preprint server)
-  # 2. The paper is submitted to a journal (fork to journal)
-  #
-  # Example of what a fork entry will look like:
-  #
-  # - id: "fork-2026-04-XX-zenodo"
-  #   target: "Zenodo"
-  #   target_type: preprint_server
-  #   created: "2026-04-XX"
-  #   source_commit: "XXXXXXX"
-  #   status: active
-  #   decision: null
-  #   identifiers:
-  #     doi: "10.5281/zenodo.XXXXXXX"
-  #     community: "spectral-branding"
+  forks:
+    - id: "fork-2026-03-28-zenodo"
+      target: "Zenodo"
+      target_type: preprint_server
+      created: "2026-03-28"
+      source_commit: "main"
+      status: merged
+      outcome: merged
+      identifiers:
+        doi: "10.5281/zenodo.19294864"
+        community: ["spectral-branding", "orgschema"]
