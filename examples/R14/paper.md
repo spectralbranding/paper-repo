@@ -1015,6 +1015,8 @@ Crucially, the commit metadata can encode the specific AI tool, model version, a
 
 This does not fully solve the AI transparency problem — an author can still commit AI-generated text under their own name. But it shifts the default from unverifiable declaration to auditable history. A repository where Claude is listed in CONTRIBUTORS.yaml with 0 commits but the manuscript was written in 3 days raises the same questions a code review would raise: the attribution and the evidence do not match. The git log creates a structural expectation of consistency between declared contributions and observed activity — an expectation that does not exist when the only disclosure is a sentence in the acknowledgments.
 
+The urgency of structural AI traceability is no longer hypothetical. Lu et al. (2026) demonstrate a fully autonomous AI system — The AI Scientist — that generates research ideas, runs experiments, writes complete manuscripts, and performs its own peer review. An AI-generated paper passed peer review at a top-tier machine learning workshop. The authors themselves identify the risks: "the potential to overwhelm the peer-review process, artificially inflate research credentials, repurpose the ideas of others without giving proper credit" (Lu et al., 2026, p. 917). The Research-as-Repository protocol provides the infrastructure response: when The AI Scientist operates within a research repository, every generated paragraph is a commit, every experiment a branch, and every AI reviewer's assessment an attributed review. The contribution is auditable by construction.
+
 ### 4.5 For the System
 
 The cumulative effect is that scientific publishing becomes a transparent, auditable, machine-readable graph of knowledge production. The Matthew Effect — where early prestige compounds into career advantage through mechanisms invisible to evaluation systems — becomes structurally traceable. The specification gap in peer review (Zharnikov, 2026t) becomes closeable. Funding compliance — Plan S open-access mandates, funder data-sharing requirements — becomes structural: checked by the compliance gate against `FUNDING.yaml` conditions at fork time, not declared on a form and hoped for.
@@ -1229,6 +1231,8 @@ Katz, D. S., Barba, L. A., Niemeyer, K. E., & Smith, A. M. (2018). Journal of Op
 McNutt, M. (2014). Reproducibility. *Science*, 343(6168), 229. https://doi.org/10.1126/science.1250475
 
 Lariviere, V., Haustein, S., & Mongeon, P. (2015). The oligopoly of academic publishers in the digital era. *PLOS ONE*, 10(6), e0127502.
+
+Lu, C., Lu, C., Lange, R. T., Yamada, Y., Hu, S., Foerster, J., Ha, D., & Clune, J. (2026). Towards end-to-end automation of AI research. *Nature*, 651, 914-920. https://doi.org/10.1038/s41586-026-10265-5
 
 Nosek, B. A., Alter, G., Banks, G. C., et al. (2015). Promoting an open research culture. *Science*, 348(6242), 1422-1425. https://doi.org/10.1126/science.aab2374
 
