@@ -978,7 +978,7 @@ Review labor becomes visible, portable, and creditable. The reviewer's work is n
 
 ### 4.3 For Editors
 
-The editor gains structured data about every paper in the pipeline: who contributed what, how the paper has been received elsewhere, and what the reviewer community thinks — not as a stack of PDFs in an inbox, but as a queryable graph of repositories, forks, and review branches.
+The editor gains structured data about every paper in the pipeline: who contributed what, how the paper has been received elsewhere, and what the reviewer community thinks — not as a stack of PDFs in an inbox, but as a queryable graph of repositories, forks, and review branches. The reviewer portfolio system enables automated reviewer discovery: an editor can query for researchers with demonstrated review expertise in specific topics, methods, or claim types — matching reviewers to papers by structural competence rather than personal networks.
 
 ### 4.4 For AI Transparency
 
@@ -993,6 +993,53 @@ This does not fully solve the AI transparency problem — an author can still co
 ### 4.5 For the System
 
 The cumulative effect is that scientific publishing becomes a transparent, auditable, machine-readable graph of knowledge production. The Matthew Effect — where early prestige compounds into career advantage through mechanisms invisible to evaluation systems — becomes structurally traceable. The specification gap in peer review (Zharnikov, 2026t) becomes closeable. Funding compliance — Plan S open-access mandates, funder data-sharing requirements — becomes structural: checked by the compliance gate against `FUNDING.yaml` conditions at fork time, not declared on a form and hoped for.
+
+Post-publication commentary follows the same pattern: a reader can fork the published repository, add a critique as a committed review branch, and submit it to the journal's collection. The critique carries the same provenance and attribution as the original review. Living papers — research updated continuously — become the natural mode, with each version a tagged commit rather than a separate publication.
+
+The same CI pipeline that validates compliance can also validate reproducibility: running the analysis code in the repository against the declared data manifest and confirming that the stated results are computationally reachable. Reproducibility becomes a compliance check, not a separate initiative.
+
+### 4.6 For Universities and Research Evaluation
+
+Scientific evaluation currently relies on a self-reinforcing loop: universities evaluate researchers by journal prestige, journals evaluate papers partly by institutional affiliation, and hiring and funding decisions rely on journal prestige — the loop perpetuates. Direct evaluation of the actual science is prohibitively expensive, so journal brands serve as scalar proxies for quality assessment.
+
+The protocol makes direct evaluation tractable. A hiring committee can query a candidate's repositories for contribution depth — measured in commits and diffs, not author position on a byline. Review quality is captured in a portable portfolio that demonstrates scholarly judgment across venues and topics. Collaboration patterns are visible as cross-repository activity: who works with whom, on what, and how substantively. Research trajectory is legible as a commit graph over years, showing not just what was published but how ideas developed, pivoted, and matured.
+
+This does not eliminate peer review — it makes peer review data *available* for evaluation, instead of collapsing it to a binary signal: "published in Nature" or not. A tenure committee reviewing a candidate's repository can see which sections the candidate wrote, which reviewers engaged deeply with the work, and how the candidate responded to criticism — the kind of granular evidence that no CV, h-index, or journal impact factor can provide.
+
+The protocol does not replace prestige. It replaces the *need* for prestige as a proxy, by making the underlying quality data directly accessible. DORA (2012), the Leiden Manifesto (Hicks et al., 2015), and CoARA (2022) have called for precisely this shift — multi-dimensional, evidence-based research evaluation — but no system has yet delivered the data infrastructure to support it. The protocol provides that infrastructure.
+
+### 4.7 For Funders and Government
+
+The chain from grant to impact — grant funds researcher, researcher commits code and text, commits aggregate into papers, papers generate citations and downstream research — is currently traceable only at the coarsest level: which grants funded which papers. The protocol makes this chain traceable at commit-level granularity. Every commit carries contributor attribution and can reference a funding source declared in `FUNDING.yaml`. The result is a verifiable lineage from specific expenditure to specific intellectual output.
+
+Compliance becomes structural rather than bureaucratic. Funder requirements — open access mandates, data sharing, preregistration, AI disclosure — are encoded as conditions in `FUNDING.yaml` and checked by the compliance gate at fork time. Progress reports become redundant: the repository's tagged releases *are* the progress reports, with full provenance showing what was accomplished, by whom, and when. ROI measurement becomes possible at a resolution that current systems cannot approach: which commits, from which researchers, funded by which grants, produced which cited results. Publicly funded research acquires a verifiable paper trail from first commit to published result.
+
+### 4.8 For Society
+
+Tax-funded research currently enters a pipeline whose internal workings are invisible to the public that finances it. The protocol makes the research process — not just the final paper — transparently auditable. Trust in science increases when provenance is visible: the public can see not just the conclusion but the process that produced it, including how objections were raised and addressed during review.
+
+Retraction cascades become structurally traceable. When a foundational result is retracted, the dependency graphs encoded in `paper.yaml` files across the federation can flag all downstream papers that cited or depended on the retracted claims — an operation that currently requires manual literature searches and takes months. The AI disclosure question — which concerns the public, not just journal editors — has a structural answer: the commit history shows exactly what AI tools contributed, making the question auditable rather than declarative.
+
+### 4.9 For Junior Researchers
+
+AI tools are compressing the "building" phase of a research career — the years of manual literature review, data cleaning, and methodological trial-and-error where junior researchers traditionally develop architectural judgment about how research works. If AI handles the construction, the question becomes: where do junior researchers develop the judgment that senior researchers currently bring?
+
+Review portfolios provide one answer. Reviewing is learning — evaluating others' claims, methods, and arguments develops exactly the critical judgment that AI cannot shortcut. The protocol makes review a credited activity with a portable record, transforming it from invisible service labor into a visible training mechanism. A junior researcher's contribution is legible from their first commit — not hidden behind senior author names on a byline where the fourth author's actual role is unknowable.
+
+The protocol does not solve the pipeline problem. But it provides the infrastructure for career development paths that do not depend on the traditional model of building invisibly for years before receiving credit. When contributions are commits, even early-career researchers have a verifiable record of what they built and how they think.
+
+### 4.10 Stakeholder Summary
+
+| Stakeholder | Current pain | Protocol benefit |
+|-------------|-------------|-----------------|
+| Authors | Formatting waste, opaque decisions, AI disclosure guilt | Own their research. Full contribution credit. AI transparent by design. |
+| Reviewers | Invisible labor, no credit, no portfolio | Attributed work. Portable portfolio. Measurable depth. |
+| Junior researchers | Pipeline collapse, invisible contributions | Visible from first commit. Review as credited training. |
+| Editors | Desk rejection waste, reviewer matching hard | Compliance gate. Structural reviewer matching. Auditable pipeline. |
+| Journals | Role threatened by preprints | Elevated from gatekeeper to curator. Quality of curation measurable. |
+| Universities | Rely on journal prestige as proxy | Evaluate researchers on structural data: commits, reviews, trajectory. |
+| Funders | Compliance is bureaucratic, ROI unmeasurable | Grant-to-impact chain traceable. Compliance as YAML field. |
+| Society | Publicly funded research opaque | Transparent, auditable research. Trust through provenance. |
 
 ---
 
