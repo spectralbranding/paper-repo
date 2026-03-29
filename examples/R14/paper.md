@@ -980,7 +980,7 @@ The four-level hierarchy introduced in Section 1.1 — repository, paper, fork, 
 
 The rendering is lossy at every layer. A brand specification cannot be fully conveyed by any finite set of signals. An organizational schema cannot be perfectly executed by any operational process. A research repository cannot be fully captured by any single paper. And the perception is observer-dependent: different consumers perceive different brands from the same signals; different employees experience different organizations from the same processes; different reviewers perceive different papers from the same manuscript.
 
-**Self-reference.** This paper is itself an instance of the pattern it describes. The research (this repository) is rendered into a paper (this manuscript) that produces community evaluation (peer review at the target journal). The reader is currently experiencing the perception layer of a specification-implementation-perception pipeline whose specification layer is a Git repository. The rendering is lossy — several hundred commits of research development are compressed into approximately 9,000 words. And the evaluation is observer-dependent — different reviewers will perceive different papers from this same text.
+**Self-reference.** This paper is itself an instance of the pattern it describes. The research (this repository) is rendered into a paper (this manuscript) that produces community evaluation (peer review at the target journal). The reader is currently experiencing the perception layer of a specification-implementation-perception pipeline whose specification layer is a Git repository. The rendering is lossy — several hundred commits of research development are compressed into a single manuscript. And the evaluation is observer-dependent — different reviewers will perceive different papers from this same text.
 
 ---
 
@@ -1041,7 +1041,7 @@ Compliance becomes structural rather than bureaucratic. Funder requirements — 
 
 ### 4.8 For Society
 
-Tax-funded research currently enters a pipeline whose internal workings are invisible to the public that finances it. The protocol makes the research process — not just the final paper — transparently auditable. Trust in science increases when provenance is visible: the public can see not just the conclusion but the process that produced it, including how objections were raised and addressed during review.
+Tax-funded research currently enters a pipeline whose internal workings are invisible to the public that finances it. The protocol makes the research process — not just the final paper — transparently auditable. Trust in science is expected to increase when provenance is visible: the public can see not just the conclusion but the process that produced it, including how objections were raised and addressed during review.
 
 Retraction cascades become structurally traceable. When a foundational result is retracted, the dependency graphs encoded in `paper.yaml` files across the federation can flag all downstream papers that cited or depended on the retracted claims — an operation that currently requires manual literature searches and takes months. The AI disclosure question — which concerns the public, not just journal editors — has a structural answer: the commit history shows exactly what AI tools contributed, making the question auditable rather than declarative.
 
@@ -1059,7 +1059,7 @@ The protocol does not solve the pipeline problem. But it provides the infrastruc
 
 | Stakeholder | Current pain | Protocol benefit |
 |-------------|-------------|-----------------|
-| Authors | Formatting waste, opaque decisions, AI disclosure guilt | Own their research. Full contribution credit. AI transparent by design. |
+| Authors | Formatting waste, opaque decisions, AI disclosure uncertainty | Own their research. Full contribution credit. AI transparent by design. |
 | Reviewers | Invisible labor, no credit, no portfolio | Attributed work. Portable portfolio. Measurable depth. |
 | Junior researchers | Pipeline collapse, invisible contributions | Visible from first commit. Review as credited training. |
 | Editors | Desk rejection waste, reviewer matching hard | Compliance gate. Structural reviewer matching. Auditable pipeline. |
