@@ -101,6 +101,24 @@ cp /path/to/paper-repo/templates/* .
 | [`examples/R13/`](examples/R13/) | Paper Spec paper — contributor attribution + fork history (Zenodo + QSS) |
 | [`examples/R14/`](examples/R14/) | **This protocol's own paper** — full self-referential implementation (paper.md + paper.yaml + all artifacts) |
 
+## Privacy: The Hash Is Always Public, the Content Need Not Be
+
+Open science and confidentiality are not mutually exclusive. A commit hash is a tamper-evident fingerprint — publishing the hash establishes that the work in this exact form existed at this exact moment, signed by this exact author, without revealing what the work is.
+
+This is **commit-reveal**: priority and provenance established immediately, content disclosure under the author's control.
+
+| Disclosure mode | What is public | What stays private |
+|---|---|---|
+| Solo private + hash anchors | Commit hashes (timestamped + signed) | Full content until author chooses to release |
+| Consortium shared private branch | Periodic hash anchors | Branch contents — visible only to members |
+| Hybrid public-private repo | `paper.yaml`, references, public commit graph | `.wiki/`, raw data, draft branches |
+| Embargoed disclosure | Hash at time *t* | Content until *t + n*; hash proves no editing during embargo |
+| Standard open science | Everything | Nothing |
+
+Years from now, in the event of a priority dispute, the researcher reveals the contents and any party can recompute the hash to verify the disclosed file matches the previously published anchor. Most academics assume git-native research forces them to choose between confidentiality and credit. Cryptographic commit-reveal gives them both.
+
+For misconduct prevention, this is the structural alternative to centralized institutional databanks: a scientist's reputation is the verifiable history of their commits. There is no need to "report" misconduct at the moment of an employment transition — the misconduct, if it occurred, is visible at the granularity of the commit graph. Fabrication cannot retroactively edit a signed, hashed commit without breaking the chain.
+
 ## AI Traceability by Design
 
 Git doesn't just track your work. It tracks your AI's work too.
