@@ -1,36 +1,31 @@
-# PROVENANCE.yaml — R13 Paper as Specification
-# Demonstrates fork-based submission provenance per Research-as-Repository protocol
+# PROVENANCE.yaml — R13: Paper as Specification
+# Fork history and submission records per the Research-as-Repository protocol
 
 provenance:
-  paper_title: "Paper as specification: A machine-readable standard for scientific claims"
+  paper_title: "Paper as Specification: A Machine-Readable Standard for Scientific Claims"
   citation_key: "2026t"
-  repository: "spectral-branding/research/R13_paper_as_specification.md"
+  repository: "spectralbranding/sbt-papers/r13-paper-as-specification"
 
   forks:
-    - id: "fork-2026-03-26-zenodo"
+    - id: "fork-2026-03-25-zenodo"
       target: "Zenodo"
       target_type: preprint_server
-      created: "2026-03-26T10:00:00Z"
-      source_commit: "a1b2c3d"
-      status: merged  # fork merged into Zenodo collection
-      outcome: merged
-      decision_date: "2026-03-26"
-      decision_public: true
+      created: "2026-03-25"
+      source_commit: "main"
+      status: merged
+      outcome: published
       identifiers:
         doi: "10.5281/zenodo.19210037"
-        community: "spectral-branding"
+        community: ["spectral-branding"]
 
     - id: "fork-2026-03-26-qss"
-      target: "Quantitative Science Studies"
+      target: "Quantitative Science Studies (MIT Press)"
       target_type: journal
-      created: "2026-03-26T14:00:00Z"
-      source_commit: "a1b2c3d"
-      status: active
-      decision: null
-      decision_date: null
-      decision_public: false
-      reviewers: null
-      review_depth: null
-      submission_id: "QSS-2026-0048"
-      prior_forks_visible: true
-      notes: "Gold OA, APC $1,200. Decision expected ~May 2026."
+      created: "2026-03-26"
+      source_commit: "main"
+      status: pending
+      outcome: under_review
+      identifiers:
+        manuscript_id: "QSS-2026-0048"
+      notes: >
+        Article type. Gold OA (APC $1,200). 6,596 words, 4 propositions.

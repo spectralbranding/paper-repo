@@ -1,6 +1,5 @@
 # CONTRIBUTORS.yaml — R14: Research as Repository
 # Verified contributor attribution per the Research-as-Repository protocol
-# This file IS the protocol's own CONTRIBUTORS.yaml — self-referential by design.
 
 contributors:
   - name: "Dmitry Zharnikov"
@@ -11,10 +10,11 @@ contributors:
       - methodology
       - writing-original
       - software
+      - formal-analysis
       - project-administration
     affiliation: "Independent Researcher"
-    first_commit: "2026-03-28"
-    last_commit: "2026-03-28"
+    first_commit: "2026-03-15"
+    last_commit: "2026-04-02"
 
   - name: "Claude (Anthropic)"
     type: ai_tool
@@ -22,26 +22,25 @@ contributors:
       - writing-review
       - consistency-checking
       - software
-      - formal-analysis
     disclosure: >
-      AI tools (Claude, Anthropic) were used for manuscript drafting,
-      literature review structuring, YAML schema design, Python validator
-      implementation, and editorial review. All protocol design decisions,
-      theoretical claims, and architectural choices are solely the author's.
+      Used for manuscript review, terminology consistency checking,
+      editorial feedback, and compliance gate validator development.
+      All theoretical propositions, protocol design, and intellectual
+      contributions are solely the author's work.
 
   - name: "Gemini Deep Research (Google)"
     type: ai_tool
     roles:
       - investigation
     disclosure: >
-      Used for prior art landscape mapping (5 structured prompts).
-      All results independently verified before incorporation.
+      Used for literature landscape mapping (existing publishing
+      infrastructure, version control in science). All results
+      independently verified.
 
-  - name: "Grok (xAI)"
+  - name: "Grok Deep Research (xAI)"
     type: ai_tool
     roles:
       - investigation
-      - validation
     disclosure: >
-      Used for prior art search (3 prompts) and simulated editorial
-      review. Results verified independently.
+      Used for Round 2 literature review (RO-Crate, FAIR4RS, DataCite,
+      evaluation frameworks). All results independently verified.
