@@ -140,7 +140,7 @@ They compose: `paper.yaml` is one file in the paper repository. Paper Spec valid
 
 ## Research Paper
 
-Zharnikov, D. (2026u). Research as Repository: A Git-Native Protocol for Scientific Knowledge Production. Working Paper.
+Zharnikov, D. (2026u). Research as Repository: A Git-Native Protocol for Scientific Knowledge Production. Working Paper. https://doi.org/10.5281/zenodo.19294864
 
 ## Related
 
