@@ -1,3 +1,7 @@
+[![MIT License](https://img.shields.io/badge/Code-MIT-blue.svg)](LICENSE)
+[![CC-BY 4.0](https://img.shields.io/badge/Data-CC--BY_4.0-lightgrey.svg)](LICENSE-data)
+![Last Updated](https://img.shields.io/badge/updated-2026--05--29-success)
+
 # Paper Repo: A Git-Native Protocol for Scientific Knowledge Production
 
 A research program is not a sequence of documents. It is a repository. Papers are not the research — they are renders of the research at specific points on its timeline, shared with the scientific community so findings can be confirmed and knowledge can accumulate.
@@ -151,3 +155,122 @@ Zharnikov, D. (2026u). Research as Repository: A Git-Native Protocol for Scienti
 ## License
 
 MIT
+
+---
+
+## 1 | Getting Started
+
+Clone the repository and enter the directory:
+
+```bash
+git clone https://github.com/spectralbranding/paper-repo.git
+cd paper-repo
+```
+
+The project anchor at the repository root is `.here` (this repo is schema- and
+script-only; there is no `pyproject.toml`). Python 3 with PyYAML is the only
+runtime dependency for the bundled validator.
+
+```bash
+python3 -m pip install --user pyyaml
+```
+
+---
+
+## 2 | Project Layout
+
+```
+.
+├── schemas/                # paper_repo.yaml + journal_spec.yaml
+├── examples/
+│   ├── journal-specs/      # Machine-readable journal submission specs
+│   ├── R13/                # Paper Spec example paper
+│   └── R14/                # This protocol's own paper (self-referential)
+├── scripts/
+│   └── validate_paper.py   # Compliance checker (repo vs. journal spec)
+├── templates/              # CONTRIBUTORS / DATA_MANIFEST / PROVENANCE skeletons
+├── output/                 # Generated artifacts
+│   ├── figures/
+│   ├── tables/
+│   └── logs/               # Pipeline run logs (master_run.log)
+├── CITATION.cff            # Machine-readable citation
+├── LICENSE                 # MIT (code)
+├── LICENSE-data            # CC BY 4.0 (data + figures)
+├── reproduce.sh            # Single-command pipeline reproduction
+├── .here                   # Project anchor
+└── README.md
+```
+
+---
+
+## 3 | Quick Start
+
+Run the bundled validator against every shipped example paper and journal spec:
+
+```bash
+./reproduce.sh
+```
+
+The script checks dependencies, validates `examples/R13/` and `examples/R14/`
+against each spec in `examples/journal-specs/`, and writes a run log to
+`output/logs/master_run.log`.
+
+Validate a single paper against a single journal spec directly:
+
+```bash
+python3 scripts/validate_paper.py \
+  --repo examples/R14 \
+  --spec examples/journal-specs/journal_spec_jm.yaml
+```
+
+---
+
+## 4 | Dependencies
+
+| Tool | Version | Purpose |
+|------|---------|---------|
+| Python | ≥ 3.10 | Runtime for `validate_paper.py` |
+| PyYAML | ≥ 6.0 | Parse `paper.yaml` + `journal_spec.yaml` |
+| Git | any recent | Repository operations + commit-history attribution |
+
+No build step. No virtualenv required for the validator. CI environments can
+run `pip install pyyaml` and execute the validator directly.
+
+---
+
+## 5 | Script Map
+
+| Script | Inputs | Outputs |
+|--------|--------|---------|
+| `scripts/validate_paper.py` | `--repo <paper-dir>` `--spec <journal-spec.yaml>` | Compliance report on stdout; exit code 0/1 |
+| `reproduce.sh` | Bundled `examples/` + `examples/journal-specs/` | `output/logs/master_run.log` |
+
+---
+
+## 6 | Citation
+
+If you build on this work, please cite:
+
+> Zharnikov, D. (2026u). *Research as Repository: A Git-Native Protocol for
+> Scientific Knowledge Production.* Working Paper. DOI
+> [10.5281/zenodo.19294864](https://doi.org/10.5281/zenodo.19294864).
+
+Machine-readable citation: see [`CITATION.cff`](CITATION.cff). GitHub, Zenodo,
+Zotero, and Pandoc all read this format natively.
+
+---
+
+## 7 | Licence
+
+- **Code** — © Dmitry Zharnikov, 2026. [MIT Licence](LICENSE).
+- **Data, figures, tables, schemas, example paper artifacts** — © Dmitry
+  Zharnikov, 2026. [CC BY 4.0](LICENSE-data).
+
+Both licences permit reuse with attribution. The MIT Licence permits
+modification and redistribution of code; CC BY 4.0 permits any reuse of data
+and rendered artifacts with attribution to the author and citation of the
+concept DOI above.
+
+---
+
+*Last updated: 2026-05-29*
