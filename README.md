@@ -169,11 +169,8 @@ cd paper-repo
 
 The project anchor at the repository root is `.here` (this repo is schema- and
 script-only; there is no `pyproject.toml`). Python 3 with PyYAML is the only
-runtime dependency for the bundled validator.
-
-```bash
-python3 -m pip install --user pyyaml
-```
+runtime dependency for the bundled validator, and [uv](https://docs.astral.sh/uv/)
+supplies both per run, so nothing is installed into the system Python.
 
 ---
 
@@ -213,12 +210,14 @@ Run the bundled validator against every shipped example paper and journal spec:
 
 The script checks dependencies, validates `examples/R13/` and `examples/R14/`
 against each spec in `examples/journal-specs/`, and writes a run log to
-`output/logs/master_run.log`.
+`output/logs/master_run.log`. A paper that fails a check is a compliance
+finding and is reported; the script exits nonzero only when the validator
+itself cannot run.
 
 Validate a single paper against a single journal spec directly:
 
 ```bash
-python3 scripts/validate_paper.py \
+uv run --no-project --with pyyaml python scripts/validate_paper.py \
   --repo examples/R14 \
   --spec examples/journal-specs/journal_spec_jm.yaml
 ```
@@ -229,12 +228,13 @@ python3 scripts/validate_paper.py \
 
 | Tool | Version | Purpose |
 |------|---------|---------|
+| uv | any recent | Supplies Python and PyYAML per run |
 | Python | ≥ 3.10 | Runtime for `validate_paper.py` |
 | PyYAML | ≥ 6.0 | Parse `paper.yaml` + `journal_spec.yaml` |
 | Git | any recent | Repository operations + commit-history attribution |
 
-No build step. No virtualenv required for the validator. CI environments can
-run `pip install pyyaml` and execute the validator directly.
+No build step and no virtualenv to manage: `uv run --with pyyaml` resolves the
+dependency for each run, locally and in CI.
 
 ---
 
